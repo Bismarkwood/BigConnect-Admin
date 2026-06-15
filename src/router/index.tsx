@@ -1,7 +1,7 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import MainLayout from '../layouts/MainLayout'
-import { dashboardRoutes } from '../features/dashboard/routes'
 import { authRoutes } from '../features/auth/routes'
+import { dashboardRoutes } from '../features/dashboard/routes'
 
 function AppRouter() {
   return (
@@ -14,6 +14,10 @@ function AppRouter() {
         <Route element={<MainLayout />}>
           {dashboardRoutes}
         </Route>
+
+        {/* Default redirect */}
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </BrowserRouter>
   )
