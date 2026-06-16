@@ -11,6 +11,7 @@ import ConversationsPage from '../features/conversations/pages/ConversationsPage
 import TicketsPage from '../features/tickets/pages/TicketsPage'
 import UsagePage from '../features/usage/pages/UsagePage'
 import FinancePage from '../features/finance/pages/FinancePage'
+import SubscriptionsPage from '../features/subscriptions/pages/SubscriptionsPage'
 import ReportsPage from '../features/reports/pages/ReportsPage'
 import TeamPage from '../features/team/pages/TeamPage'
 import SettingsPage from '../features/settings/pages/SettingsPage'
@@ -34,14 +35,15 @@ function AppRouter() {
           <Route path="/tickets" element={<TicketsPage />} />
           <Route path="/usage" element={<UsagePage />} />
           <Route path="/finance" element={<FinancePage />} />
+          <Route path="/subscriptions" element={<SubscriptionsPage />} />
           <Route path="/reports" element={<ReportsPage />} />
           <Route path="/team" element={<TeamPage />} />
           <Route path="/settings" element={<SettingsPage />} />
         </Route>
 
         {/* Default redirect */}
-        <Route path="/" element={<Navigate to="/login" replace />} />
-        <Route path="*" element={<Navigate to="/login" replace />} />
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
     </BrowserRouter>
   )

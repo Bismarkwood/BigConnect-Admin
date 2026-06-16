@@ -18,10 +18,13 @@ const mockAgents = [
 ]
 
 const statusConfig: Record<AgentStatus, { color: string; dot: string; bg: string }> = {
-  'Live': { color: 'text-emerald-700', dot: 'bg-emerald-500', bg: 'bg-emerald-50' },
-  'Testing': { color: 'text-blue-700', dot: 'bg-blue-500', bg: 'bg-blue-50' },
-  'Paused': { color: 'text-amber-700', dot: 'bg-amber-500', bg: 'bg-amber-50' },
   'Draft': { color: 'text-slate-600', dot: 'bg-slate-400', bg: 'bg-slate-100' },
+  'Testing': { color: 'text-blue-700', dot: 'bg-blue-500', bg: 'bg-blue-50' },
+  'Submitted for Review': { color: 'text-violet-700', dot: 'bg-violet-500', bg: 'bg-violet-50' },
+  'Approved': { color: 'text-emerald-700', dot: 'bg-emerald-500', bg: 'bg-emerald-50' },
+  'Live': { color: 'text-emerald-700', dot: 'bg-emerald-500', bg: 'bg-emerald-50' },
+  'Needs Changes': { color: 'text-red-700', dot: 'bg-red-500', bg: 'bg-red-50' },
+  'Paused': { color: 'text-amber-700', dot: 'bg-amber-500', bg: 'bg-amber-50' },
   'Archived': { color: 'text-slate-500', dot: 'bg-slate-400', bg: 'bg-slate-100' },
 }
 

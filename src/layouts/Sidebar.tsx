@@ -3,9 +3,12 @@ import {
   LayoutDashboard,
   Users,
   Bot,
+  BookOpen,
+  Radio,
   MessageSquare,
   Ticket,
   BarChart3,
+  CreditCard,
   Wallet,
   FileText,
   UserCog,
@@ -25,6 +28,8 @@ const navGroups = [
     items: [
       { name: 'Clients', path: '/clients', icon: Users },
       { name: 'AI Agents', path: '/ai-agents', icon: Bot },
+      { name: 'Knowledge Base', path: '/knowledge-base', icon: BookOpen },
+      { name: 'Channels', path: '/channels', icon: Radio },
     ],
   },
   {
@@ -38,6 +43,7 @@ const navGroups = [
     label: 'Business',
     items: [
       { name: 'Usage', path: '/usage', icon: BarChart3 },
+      { name: 'Subscriptions', path: '/subscriptions', icon: CreditCard },
       { name: 'Finance', path: '/finance', icon: Wallet },
       { name: 'Reports', path: '/reports', icon: FileText },
     ],

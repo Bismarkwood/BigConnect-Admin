@@ -1,7 +1,7 @@
 // Centralized API client — all feature services use this
 // Admin Platform connects to: /api/v1/admin/...
 // SaaS Backend is the single source of truth
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api/v1/admin'
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '#dd14ab'
 
 interface RequestConfig extends RequestInit {
   params?: Record<string, string>
