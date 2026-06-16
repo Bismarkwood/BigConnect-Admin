@@ -12,6 +12,9 @@ import {
 import {
     financeRouter
 } from './routes/finance.js'
+import {
+    ticketsRouter
+} from './routes/tickets.js'
 
 const app = express()
 const PORT = 3000
@@ -24,6 +27,7 @@ app.use('/api/v1/admin', clientsRouter)
 app.use('/api/v1/admin', agentsRouter)
 app.use('/api/v1/admin', subscriptionsRouter)
 app.use('/api/v1/admin', financeRouter)
+app.use('/api/v1/admin', ticketsRouter)
 
 // Health check
 app.get('/api/v1/health', (req, res) => {

@@ -3,7 +3,6 @@ import {
   LayoutDashboard,
   Users,
   Bot,
-  MessageSquare,
   Ticket,
   BarChart3,
   CreditCard,
@@ -31,7 +30,6 @@ const navGroups = [
   {
     label: 'Engagement',
     items: [
-      { name: 'Conversations', path: '/conversations', icon: MessageSquare },
       { name: 'Tickets', path: '/tickets', icon: Ticket },
     ],
   },
