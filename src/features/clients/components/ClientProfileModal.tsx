@@ -7,7 +7,6 @@ import {
   Ticket,
   BarChart3,
   Wallet,
-  Pencil,
   Ban,
   Send,
   PhoneCall,
@@ -15,8 +14,6 @@ import {
   CheckCircle2,
   AlertCircle,
   Clock,
-  BookOpen,
-  Upload,
   CreditCard,
   Power,
   Plus,
@@ -27,6 +24,10 @@ import {
   Calendar,
 } from 'lucide-react'
 import type { Client } from '../types'
+import KnowledgeBaseTab from '../../knowledge-base/components/KnowledgeBaseTab'
+import CallLogsTab from '../../call-logs/components/CallLogsTab'
+import BillingTab from '../../billing/components/BillingTab'
+import AIAgentsTab from '../../ai-agents/components/AIAgentsTab'
 
 interface ClientProfileModalProps {
   client: Client | null
@@ -34,16 +35,15 @@ interface ClientProfileModalProps {
   onClose: () => void
 }
 
-type Tab = 'overview' | 'agents' | 'knowledge' | 'channels' | 'conversations' | 'tickets' | 'finance' | 'activity'
+type Tab = 'overview' | 'agents' | 'knowledge' | 'channels' | 'call-logs' | 'billing' | 'activity'
 
 const tabs: { id: Tab; label: string }[] = [
   { id: 'overview', label: 'Overview' },
   { id: 'agents', label: 'AI Agents' },
   { id: 'knowledge', label: 'Knowledge Base' },
   { id: 'channels', label: 'Channels' },
-  { id: 'conversations', label: 'Conversations' },
-  { id: 'tickets', label: 'Tickets' },
-  { id: 'finance', label: 'Usage & Finance' },
+  { id: 'call-logs', label: 'Call Logs' },
+  { id: 'billing', label: 'Billing & Subscription' },
   { id: 'activity', label: 'Activity Log' },
 ]
 
@@ -77,7 +77,7 @@ function ClientProfileModal({ client, open, onClose }: ClientProfileModalProps) 
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#07152F]/20 backdrop-blur-sm">
-      <div className="relative flex h-[90vh] w-[90vw] max-w-[1400px] flex-col overflow-hidden rounded-3xl border border-[#DDE6F5] bg-white">
+      <div className="relative flex h-[96vh] w-[96vw] max-w-[1600px] flex-col overflow-hidden rounded-3xl border border-[#DDE6F5] bg-white">
 
         {/* Premium Header */}
         <div className="flex-shrink-0 bg-[#F3F7FF] border-b border-[#DDE6F5] px-8 py-5">
@@ -100,9 +100,6 @@ function ClientProfileModal({ client, open, onClose }: ClientProfileModalProps) 
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <button className="flex items-center gap-1.5 rounded-lg border border-[#DDE6F5] bg-white px-3.5 py-2 text-[12px] font-medium text-[#6B7A99] transition hover:bg-slate-50">
-                <Pencil className="h-3.5 w-3.5" strokeWidth={1.5} />Edit Client
-              </button>
               <button className="flex items-center gap-1.5 rounded-lg border border-red-200 bg-white px-3.5 py-2 text-[12px] font-medium text-red-600 transition hover:bg-red-50">
                 <Ban className="h-3.5 w-3.5" strokeWidth={1.5} />Suspend
               </button>
@@ -414,11 +411,11 @@ function ClientProfileModal({ client, open, onClose }: ClientProfileModalProps) 
                 <div className="rounded-xl border border-[#DDE6F5] p-5">
                   <h4 className="text-[13px] font-semibold text-[#07152F] mb-3">Quick Actions</h4>
                   <div className="grid grid-cols-2 gap-2">
-                    <QuickAction icon={<Pencil className="h-3.5 w-3.5" strokeWidth={1.5} />} label="Edit Client" />
-                    <QuickAction icon={<Bot className="h-3.5 w-3.5" strokeWidth={1.5} />} label="Create Agent" />
-                    <QuickAction icon={<Upload className="h-3.5 w-3.5" strokeWidth={1.5} />} label="Upload KB" />
-                    <QuickAction icon={<Radio className="h-3.5 w-3.5" strokeWidth={1.5} />} label="Connect Channel" />
-                    <QuickAction icon={<CreditCard className="h-3.5 w-3.5" strokeWidth={1.5} />} label="Record Payment" />
+                    <QuickAction icon={<Bot className="h-3.5 w-3.5" strokeWidth={1.5} />} label="View Agents" />
+                    <QuickAction icon={<Radio className="h-3.5 w-3.5" strokeWidth={1.5} />} label="View Channels" />
+                    <QuickAction icon={<CreditCard className="h-3.5 w-3.5" strokeWidth={1.5} />} label="View Invoice" />
+                    <QuickAction icon={<Wallet className="h-3.5 w-3.5" strokeWidth={1.5} />} label="Record Payment" />
+                    <QuickAction icon={<MessageSquare className="h-3.5 w-3.5" strokeWidth={1.5} />} label="Test Agent" />
                     <QuickAction icon={<Power className="h-3.5 w-3.5" strokeWidth={1.5} />} label="Suspend" />
                   </div>
                 </div>
@@ -427,12 +424,11 @@ function ClientProfileModal({ client, open, onClose }: ClientProfileModalProps) 
           )}
 
           {/* Other tabs - placeholders */}
-          {activeTab === 'agents' && <TabPlaceholder icon={<Bot className="h-10 w-10 text-[#DDE6F5]" strokeWidth={1.5} />} title="AI Agents" desc="Manage AI assistants assigned to this client." action="Create AI Agent" />}
-          {activeTab === 'knowledge' && <TabPlaceholder icon={<BookOpen className="h-10 w-10 text-[#DDE6F5]" strokeWidth={1.5} />} title="Knowledge Base" desc="Approved business information used by the AI assistant." action="Upload Document" />}
+          {activeTab === 'agents' && <AIAgentsTab clientId={client.id} />}
+          {activeTab === 'knowledge' && <KnowledgeBaseTab clientId={client.id} />}
           {activeTab === 'channels' && <TabPlaceholder icon={<Radio className="h-10 w-10 text-[#DDE6F5]" strokeWidth={1.5} />} title="Channels" desc="Manage customer communication channels for this client." action="Connect Channel" />}
-          {activeTab === 'conversations' && <TabPlaceholder icon={<MessageSquare className="h-10 w-10 text-[#DDE6F5]" strokeWidth={1.5} />} title="Conversations" desc="Customer interactions handled by AI agents." action="" />}
-          {activeTab === 'tickets' && <TabPlaceholder icon={<Ticket className="h-10 w-10 text-[#DDE6F5]" strokeWidth={1.5} />} title="Tickets" desc="Escalated issues and support requests." action="Create Ticket" />}
-          {activeTab === 'finance' && <TabPlaceholder icon={<Wallet className="h-10 w-10 text-[#DDE6F5]" strokeWidth={1.5} />} title="Usage & Finance" desc="API usage, billing, invoices, and payment history." action="View Invoice" />}
+          {activeTab === 'call-logs' && <CallLogsTab clientId={client.id} />}
+          {activeTab === 'billing' && <BillingTab clientId={client.id} />}
           {activeTab === 'activity' && (
             <div className="rounded-xl border border-[#DDE6F5] overflow-hidden">
               <div className="flex items-center justify-between bg-[#F3F7FF] px-5 py-3.5 border-b border-[#DDE6F5]">
@@ -500,10 +496,10 @@ function ClientProfileModal({ client, open, onClose }: ClientProfileModalProps) 
           <span className="text-[11px] text-[#6B7A99]">Last updated Jun 15, 2026</span>
           <div className="flex items-center gap-2">
             <button className="rounded-lg border border-[#DDE6F5] bg-white px-3.5 py-2 text-[12px] font-medium text-[#6B7A99] transition hover:bg-slate-50">Save Note</button>
-            <button className="rounded-lg bg-blue-600 px-4 py-2 text-[12px] font-medium text-white transition hover:bg-blue-700">Edit Client</button>
           </div>
         </div>
       </div>
+
     </div>
   )
 }
