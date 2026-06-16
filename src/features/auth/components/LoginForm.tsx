@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 import { Eye, EyeOff, LockKeyhole, Mail, Loader2, CheckCircle2, AlertTriangle } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import ForgotPasswordModal from './ForgotPasswordModal'
@@ -21,20 +21,18 @@ function LoginForm() {
   const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false)
   const [capsLockOn, setCapsLockOn] = useState(false)
   const [toasts, setToasts] = useState<ToastMessage[]>([])
-  const [sessionMessage, setSessionMessage] = useState('')
-
-  // Check for session messages (prepared for future auth integration)
-  useEffect(() => {
+  const [sessionMessage] = useState(() => {
     const params = new URLSearchParams(window.location.search)
     const msg = params.get('message')
     if (msg === 'session_expired') {
-      setSessionMessage('Your session has expired. Please sign in again.')
+      return 'Your session has expired. Please sign in again.'
     } else if (msg === 'logged_out') {
-      setSessionMessage('You have been logged out successfully.')
+      return 'You have been logged out successfully.'
     } else if (msg === 'password_updated') {
-      setSessionMessage('Password updated. Please sign in again.')
+      return 'Password updated. Please sign in again.'
     }
-  }, [])
+    return ''
+  })
 
   const addToast = useCallback((type: ToastMessage['type'], text: string) => {
     const id = Date.now().toString()

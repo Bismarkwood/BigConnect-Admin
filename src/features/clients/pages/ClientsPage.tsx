@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import {
   Users,
   Plus,
@@ -45,13 +45,9 @@ function ClientsPage() {
   const [addModalOpen, setAddModalOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [statusFilter, setStatusFilter] = useState<string>('all')
-  const [clients, setClients] = useState<Client[]>([])
+  // Load clients — TODO: Replace with: fetchClients().then(setClients)
+  const [clients, setClients] = useState<Client[]>(mockClients)
   const [selectedClient, setSelectedClient] = useState<Client | null>(null)
-  // Load clients — will be replaced with fetchClients() API call
-  useEffect(() => {
-    // TODO: Replace with: fetchClients().then(setClients)
-    setClients(mockClients)
-  }, [])
 
   // Filter clients
   const filteredClients = clients.filter((client) => {

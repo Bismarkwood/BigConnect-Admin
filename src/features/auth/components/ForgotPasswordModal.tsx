@@ -38,16 +38,6 @@ function ForgotPasswordModal({ open, onClose, onToast }: ForgotPasswordModalProp
     return () => clearTimeout(timer)
   }, [resendCountdown])
 
-  // Close on Escape key
-  useEffect(() => {
-    if (!open) return
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') resetModal()
-    }
-    document.addEventListener('keydown', handleEscape)
-    return () => document.removeEventListener('keydown', handleEscape)
-  })
-
   const resetModal = useCallback(() => {
     setStep('email')
     setEmail('')
@@ -59,6 +49,16 @@ function ForgotPasswordModal({ open, onClose, onToast }: ForgotPasswordModalProp
     setResendCountdown(0)
     onClose()
   }, [onClose])
+
+  // Close on Escape key
+  useEffect(() => {
+    if (!open) return
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') resetModal()
+    }
+    document.addEventListener('keydown', handleEscape)
+    return () => document.removeEventListener('keydown', handleEscape)
+  }, [open, resetModal])
 
   if (!open) return null
 

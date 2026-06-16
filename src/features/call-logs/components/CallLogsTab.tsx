@@ -40,7 +40,8 @@ interface CallLogsTabProps {
   clientId: string
 }
 
-function CallLogsTab({ clientId: _clientId }: CallLogsTabProps) {
+function CallLogsTab({ clientId }: CallLogsTabProps) {
+  void clientId
   const [searchQuery, setSearchQuery] = useState('')
 
   const completed = mockCallLogs.filter((c) => c.status === 'Completed').length
@@ -54,13 +55,12 @@ function CallLogsTab({ clientId: _clientId }: CallLogsTabProps) {
 
   return (
     <div className="space-y-5">
-      {/* Summary strip */}
       <div className="grid grid-cols-5 gap-3">
-        <SummaryCard label="Total Calls" value={String(mockCallLogs.length)} icon={<Phone className="h-4 w-4 text-blue-600" strokeWidth={1.5} />} />
-        <SummaryCard label="Completed" value={String(completed)} icon={<CheckCircle2 className="h-4 w-4 text-emerald-600" strokeWidth={1.5} />} />
-        <SummaryCard label="Missed" value={String(missed)} icon={<PhoneMissed className="h-4 w-4 text-red-500" strokeWidth={1.5} />} />
-        <SummaryCard label="Failed" value={String(failed)} icon={<XCircle className="h-4 w-4 text-red-500" strokeWidth={1.5} />} />
-        <SummaryCard label="Avg Duration" value="3:42" icon={<Clock className="h-4 w-4 text-[#6B7A99]" strokeWidth={1.5} />} />
+        <SummaryCard label="Total Calls" value={String(mockCallLogs.length)} icon={<Phone className="h-3.5 w-3.5" />} accentColor="blue" />
+        <SummaryCard label="Completed" value={String(completed)} icon={<CheckCircle2 className="h-3.5 w-3.5" />} accentColor="emerald" />
+        <SummaryCard label="Missed" value={String(missed)} icon={<PhoneMissed className="h-3.5 w-3.5" />} accentColor="rose" />
+        <SummaryCard label="Failed" value={String(failed)} icon={<XCircle className="h-3.5 w-3.5" />} accentColor="rose" />
+        <SummaryCard label="Avg Duration" value="3:42" icon={<Clock className="h-3.5 w-3.5" />} accentColor="slate" />
       </div>
 
       {/* Table */}
@@ -145,11 +145,40 @@ function CallLogsTab({ clientId: _clientId }: CallLogsTabProps) {
   )
 }
 
-function SummaryCard({ label, value, icon }: { label: string; value: string; icon: React.ReactNode }) {
+function SummaryCard({ label, value, icon, accentColor = 'blue', highlight }: {
+  label: string
+  value: string
+  icon: React.ReactNode
+  accentColor?: 'blue' | 'violet' | 'sky' | 'amber' | 'rose' | 'emerald' | 'slate'
+  highlight?: boolean
+}) {
+  const accent = {
+    blue: 'bg-blue-50 border-blue-100 text-blue-600',
+    violet: 'bg-violet-50 border-violet-100 text-violet-600',
+    sky: 'bg-sky-50 border-sky-100 text-sky-600',
+    amber: 'bg-amber-50 border-amber-100 text-amber-600',
+    rose: 'bg-rose-50 border-rose-100 text-rose-600',
+    emerald: 'bg-emerald-50 border-emerald-100 text-emerald-600',
+    slate: 'bg-slate-50 border-slate-100 text-slate-600',
+  }[accentColor]
+
   return (
-    <div className="rounded-xl border border-[#DDE6F5] bg-white p-3.5">
-      <div className="flex items-center gap-2 mb-2">{icon}<span className="text-[10px] text-[#6B7A99]">{label}</span></div>
-      <p className="text-[16px] font-bold text-[#07152F]">{value}</p>
+    <div className={`flex flex-col rounded-xl border bg-white p-4 transition-all duration-200 hover:border-blue-200 ${
+      highlight ? 'border-emerald-200 bg-emerald-50/10' : 'border-[#DDE6F5]'
+    }`}>
+      <div className="flex items-center justify-between">
+        <span className="text-[10px] font-bold uppercase tracking-wider text-[#6B7A99]">{label}</span>
+        <div className={`flex h-7 w-7 items-center justify-center rounded-lg border ${accent}`}>
+          {icon}
+        </div>
+      </div>
+      <div className="mt-2.5">
+        <p className={`text-[22px] font-black leading-none tracking-tight ${
+          highlight ? 'text-emerald-700' : 'text-[#07152F]'
+        }`}>
+          {value}
+        </p>
+      </div>
     </div>
   )
 }

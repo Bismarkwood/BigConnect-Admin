@@ -1,4 +1,5 @@
-import { Bot, Plus } from 'lucide-react'
+import { Plus } from 'lucide-react'
+import AIAgentsTab from '../components/AIAgentsTab'
 
 function AIAgentsPage() {
   return (
@@ -14,11 +15,8 @@ function AIAgentsPage() {
         </button>
       </div>
 
-      <div className="rounded-xl border border-slate-200 bg-white p-12 text-center">
-        <Bot className="mx-auto h-10 w-10 text-slate-300" strokeWidth={1.5} />
-        <p className="mt-4 text-sm font-medium text-slate-600">AI Agents module coming soon</p>
-        <p className="mt-1 text-xs text-slate-400">Manage deployed agents, training, and performance</p>
-      </div>
+      {/* Main content */}
+      <AIAgentsTab clientId="" />
     </div>
   )
 }

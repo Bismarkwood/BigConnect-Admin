@@ -80,7 +80,7 @@ function ClientProfileModal({ client, open, onClose }: ClientProfileModalProps) 
       <div className="relative flex h-[96vh] w-[96vw] max-w-[1600px] flex-col overflow-hidden rounded-3xl border border-[#DDE6F5] bg-white">
 
         {/* Premium Header */}
-        <div className="flex-shrink-0 bg-[#F3F7FF] border-b border-[#DDE6F5] px-8 py-5">
+        <div className="shrink-0 bg-[#F3F7FF] border-b border-[#DDE6F5] px-8 py-5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="flex h-13 w-13 items-center justify-center rounded-2xl bg-blue-600 text-lg font-bold text-white">
@@ -111,17 +111,17 @@ function ClientProfileModal({ client, open, onClose }: ClientProfileModalProps) 
         </div>
 
         {/* Client Health Strip */}
-        <div className="flex-shrink-0 grid grid-cols-6 divide-x divide-[#DDE6F5] border-b border-[#DDE6F5] bg-white">
-          <HealthItem icon={<BarChart3 className="h-4 w-4 text-blue-600" strokeWidth={1.5} />} label="Setup" value={`${progress}%`} context={`${completedSteps} of ${onboardingSteps.length} steps`} />
-          <HealthItem icon={<Bot className="h-4 w-4 text-violet-600" strokeWidth={1.5} />} label="AI Agents" value={String(client.aiAgentsCount)} context="2 Live · 1 Testing" />
-          <HealthItem icon={<Radio className="h-4 w-4 text-blue-600" strokeWidth={1.5} />} label="Channels" value={String(client.channelsCount)} context="WhatsApp, Voice, Web" />
-          <HealthItem icon={<BarChart3 className="h-4 w-4 text-amber-600" strokeWidth={1.5} />} label="Usage" value="72%" context="4,200 / 6,000 calls" />
-          <HealthItem icon={<Ticket className="h-4 w-4 text-red-500" strokeWidth={1.5} />} label="Tickets" value="3" context="1 urgent" />
-          <HealthItem icon={<Wallet className="h-4 w-4 text-emerald-600" strokeWidth={1.5} />} label="Payment" value={client.paymentStatus} context="Jun 1, 2026" />
+        <div className="shrink-0 grid grid-cols-6 divide-x divide-[#DDE6F5] border-b border-[#DDE6F5] bg-white">
+          <HealthItem icon={<BarChart3 className="h-4 w-4 text-blue-600" strokeWidth={1.5} />} label="Setup" value={`${progress}%`} context={`${completedSteps} of ${onboardingSteps.length} steps`} accentColor="blue" />
+          <HealthItem icon={<Bot className="h-4 w-4 text-violet-600" strokeWidth={1.5} />} label="AI Agents" value={String(client.aiAgentsCount)} context="2 Live · 1 Testing" accentColor="violet" />
+          <HealthItem icon={<Radio className="h-4 w-4 text-sky-600" strokeWidth={1.5} />} label="Channels" value={String(client.channelsCount)} context="WhatsApp, Voice, Web" accentColor="sky" />
+          <HealthItem icon={<BarChart3 className="h-4 w-4 text-amber-600" strokeWidth={1.5} />} label="Usage" value="72%" context="4,200 / 6,000 calls" accentColor="amber" />
+          <HealthItem icon={<Ticket className="h-4 w-4 text-rose-500" strokeWidth={1.5} />} label="Tickets" value="3" context="1 urgent" accentColor="rose" />
+          <HealthItem icon={<Wallet className="h-4 w-4 text-emerald-600" strokeWidth={1.5} />} label="Payment" value={client.paymentStatus} context="Jun 1, 2026" accentColor="emerald" />
         </div>
 
         {/* Pill Tab Navigation */}
-        <div className="flex-shrink-0 px-8 py-3 border-b border-[#DDE6F5]">
+        <div className="shrink-0 px-8 py-3 border-b border-[#DDE6F5]">
           <div className="inline-flex items-center gap-1 rounded-xl bg-[#F3F7FF] p-1">
             {tabs.map((tab) => (
               <button
@@ -148,7 +148,7 @@ function ClientProfileModal({ client, open, onClose }: ClientProfileModalProps) 
                 {/* Client Snapshot */}
                 <div className="rounded-xl border border-[#DDE6F5] overflow-hidden">
                   {/* Card header with gradient */}
-                  <div className="bg-gradient-to-r from-[#F3F7FF] to-white px-5 py-4 border-b border-[#DDE6F5]">
+                  <div className="bg-linear-to-r from-[#F3F7FF] to-white px-5 py-4 border-b border-[#DDE6F5]">
                     <div className="flex items-center gap-4">
                       <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-600 text-xl font-bold text-white">
                         {client.businessName.charAt(0)}
@@ -366,57 +366,76 @@ function ClientProfileModal({ client, open, onClose }: ClientProfileModalProps) 
                   </div>
                 </div>
 
-                {/* Subscription */}
-                <div className="rounded-xl border border-[#DDE6F5] p-5">
-                  <h4 className="text-[13px] font-semibold text-[#07152F] mb-3">Subscription</h4>
-                  <div className="space-y-2.5">
-                    <div className="flex justify-between text-[12px]"><span className="text-[#6B7A99]">Plan</span><span className="font-medium text-[#07152F]">{client.package}</span></div>
-                    <div className="flex justify-between text-[12px]"><span className="text-[#6B7A99]">Billing</span><span className="font-medium text-[#07152F]">Monthly</span></div>
-                    <div className="flex justify-between text-[12px]"><span className="text-[#6B7A99]">Amount</span><span className="font-semibold text-[#07152F]">GHS 2,500/mo</span></div>
-                    <div className="flex justify-between text-[12px]"><span className="text-[#6B7A99]">Next billing</span><span className="font-medium text-[#07152F]">Jul 15, 2026</span></div>
+              {/* Subscription */}
+                <div className="rounded-xl border border-[#DDE6F5] overflow-hidden">
+                  <div className="px-4 py-3 border-b border-[#DDE6F5] flex items-center justify-between">
+                    <h4 className="text-[11px] font-bold uppercase tracking-widest text-[#6B7A99]">Subscription</h4>
+                    <span className="rounded-full border border-blue-200 bg-blue-50 px-2 py-0.5 text-[10px] font-semibold text-blue-600">{client.package}</span>
+                  </div>
+                  <div className="divide-y divide-[#F3F7FF]">
+                    <MetricRow label="Plan" value={client.package} />
+                    <MetricRow label="Billing" value="Monthly" />
+                    <MetricRow label="Amount" value="GHS 2,500 / mo" highlight />
+                    <MetricRow label="Next Billing" value="Jul 15, 2026" />
                   </div>
                 </div>
 
-                {/* Payment */}
-                <div className="rounded-xl border border-[#DDE6F5] p-5">
-                  <h4 className="text-[13px] font-semibold text-[#07152F] mb-3">Payment Status</h4>
-                  <div className="space-y-2.5">
-                    <div className="flex justify-between text-[12px]"><span className="text-[#6B7A99]">Status</span><span className="font-medium text-emerald-600">Paid</span></div>
-                    <div className="flex justify-between text-[12px]"><span className="text-[#6B7A99]">Last payment</span><span className="font-medium text-[#07152F]">Jun 1, 2026</span></div>
-                    <div className="flex justify-between text-[12px]"><span className="text-[#6B7A99]">Method</span><span className="font-medium text-[#07152F]">Mobile Money</span></div>
-                    <div className="flex justify-between text-[12px]"><span className="text-[#6B7A99]">Invoice</span><span className="font-medium text-blue-600">INV-00123</span></div>
+                {/* Payment Status */}
+                <div className="rounded-xl border border-[#DDE6F5] overflow-hidden">
+                  <div className="px-4 py-3 border-b border-[#DDE6F5] flex items-center justify-between">
+                    <h4 className="text-[11px] font-bold uppercase tracking-widest text-[#6B7A99]">Payment Status</h4>
+                    <span className="inline-flex items-center gap-1 rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold text-emerald-700">
+                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />Paid
+                    </span>
                   </div>
-                  <div className="mt-3 flex gap-2 border-t border-[#DDE6F5] pt-3">
+                  <div className="divide-y divide-[#F3F7FF]">
+                    <MetricRow label="Status" value="Paid" valueClass="text-emerald-600 font-semibold" />
+                    <MetricRow label="Last Payment" value="Jun 1, 2026" />
+                    <MetricRow label="Method" value="Mobile Money" />
+                    <MetricRow label="Invoice" value="INV-00123" valueClass="text-blue-600" />
+                  </div>
+                  <div className="px-4 py-3 border-t border-[#DDE6F5] flex gap-2">
                     <ActionBtn icon={<CreditCard className="h-3.5 w-3.5" strokeWidth={1.5} />} label="View Invoice" />
                     <ActionBtn icon={<Wallet className="h-3.5 w-3.5" strokeWidth={1.5} />} label="Record Payment" />
                   </div>
                 </div>
 
                 {/* Usage */}
-                <div className="rounded-xl border border-[#DDE6F5] p-5">
-                  <h4 className="text-[13px] font-semibold text-[#07152F] mb-3">Usage This Month</h4>
-                  <div className="h-2 w-full rounded-full bg-[#F3F7FF] mb-1.5">
-                    <div className="h-full rounded-full bg-blue-600" style={{ width: '72%' }} />
+                <div className="rounded-xl border border-[#DDE6F5] overflow-hidden">
+                  <div className="px-4 py-3 border-b border-[#DDE6F5] flex items-center justify-between">
+                    <h4 className="text-[11px] font-bold uppercase tracking-widest text-[#6B7A99]">Usage This Month</h4>
+                    <span className="text-[11px] font-bold text-[#07152F]">72%</span>
                   </div>
-                  <p className="text-[10px] text-[#6B7A99] mb-3">4,200 / 6,000 API calls (72%)</p>
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-[11px]"><span className="text-[#6B7A99]">Conversations</span><span className="font-medium text-[#07152F]">142</span></div>
-                    <div className="flex justify-between text-[11px]"><span className="text-[#6B7A99]">Call minutes</span><span className="font-medium text-[#07152F]">320</span></div>
-                    <div className="flex justify-between text-[11px]"><span className="text-[#6B7A99]">SMS sent</span><span className="font-medium text-[#07152F]">800</span></div>
-                    <div className="flex justify-between text-[11px]"><span className="text-[#6B7A99]">WhatsApp</span><span className="font-medium text-[#07152F]">1,120</span></div>
+                  {/* Progress bar */}
+                  <div className="px-4 pt-3 pb-1">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="text-[10px] text-[#6B7A99]">4,200 of 6,000 API calls</span>
+                      <span className="text-[10px] font-semibold text-amber-600">1,800 left</span>
+                    </div>
+                    <div className="h-1.5 w-full rounded-full bg-[#EEF3FB] overflow-hidden">
+                      <div className="h-full rounded-full bg-blue-600 transition-all" style={{ width: '72%' }} />
+                    </div>
+                  </div>
+                  <div className="divide-y divide-[#F3F7FF]">
+                    <MetricRow label="Conversations" value="142" />
+                    <MetricRow label="Call Minutes" value="320" />
+                    <MetricRow label="SMS Sent" value="800" />
+                    <MetricRow label="WhatsApp" value="1,120" />
                   </div>
                 </div>
 
                 {/* Quick Actions */}
-                <div className="rounded-xl border border-[#DDE6F5] p-5">
-                  <h4 className="text-[13px] font-semibold text-[#07152F] mb-3">Quick Actions</h4>
-                  <div className="grid grid-cols-2 gap-2">
+                <div className="rounded-xl border border-[#DDE6F5] overflow-hidden">
+                  <div className="px-4 py-3 border-b border-[#DDE6F5]">
+                    <h4 className="text-[11px] font-bold uppercase tracking-widest text-[#6B7A99]">Quick Actions</h4>
+                  </div>
+                  <div className="p-3 grid grid-cols-2 gap-1.5">
                     <QuickAction icon={<Bot className="h-3.5 w-3.5" strokeWidth={1.5} />} label="View Agents" />
                     <QuickAction icon={<Radio className="h-3.5 w-3.5" strokeWidth={1.5} />} label="View Channels" />
                     <QuickAction icon={<CreditCard className="h-3.5 w-3.5" strokeWidth={1.5} />} label="View Invoice" />
                     <QuickAction icon={<Wallet className="h-3.5 w-3.5" strokeWidth={1.5} />} label="Record Payment" />
                     <QuickAction icon={<MessageSquare className="h-3.5 w-3.5" strokeWidth={1.5} />} label="Test Agent" />
-                    <QuickAction icon={<Power className="h-3.5 w-3.5" strokeWidth={1.5} />} label="Suspend" />
+                    <QuickAction icon={<Power className="h-3.5 w-3.5" strokeWidth={1.5} />} label="Suspend" danger />
                   </div>
                 </div>
               </div>
@@ -492,7 +511,7 @@ function ClientProfileModal({ client, open, onClose }: ClientProfileModalProps) 
         </div>
 
         {/* Sticky Footer */}
-        <div className="flex-shrink-0 flex items-center justify-between border-t border-[#DDE6F5] bg-[#F3F7FF] px-8 py-3">
+        <div className="shrink-0 flex items-center justify-between border-t border-[#DDE6F5] bg-[#F3F7FF] px-8 py-3">
           <span className="text-[11px] text-[#6B7A99]">Last updated Jun 15, 2026</span>
           <div className="flex items-center gap-2">
             <button className="rounded-lg border border-[#DDE6F5] bg-white px-3.5 py-2 text-[12px] font-medium text-[#6B7A99] transition hover:bg-slate-50">Save Note</button>
@@ -520,13 +539,31 @@ function StatusChip({ label, variant }: { label: string; variant: 'success' | 'w
   )
 }
 
-function HealthItem({ icon, label, value, context }: { icon: React.ReactNode; label: string; value: string; context: string }) {
+function HealthItem({ icon, label, value, context, accentColor }: {
+  icon: React.ReactNode
+  label: string
+  value: string
+  context: string
+  accentColor: 'blue' | 'violet' | 'sky' | 'amber' | 'rose' | 'emerald'
+}) {
+  const accent = {
+    blue: 'bg-blue-50 border-blue-100',
+    violet: 'bg-violet-50 border-violet-100',
+    sky: 'bg-sky-50 border-sky-100',
+    amber: 'bg-amber-50 border-amber-100',
+    rose: 'bg-rose-50 border-rose-100',
+    emerald: 'bg-emerald-50 border-emerald-100',
+  }[accentColor]
+
   return (
-    <div className="flex items-center gap-3 px-5 py-3.5">
-      {icon}
+    <div className="flex flex-col gap-2 px-5 py-4">
+      <div className={`inline-flex h-8 w-8 items-center justify-center rounded-lg border ${accent}`}>
+        {icon}
+      </div>
       <div>
-        <p className="text-[15px] font-bold text-[#07152F]">{value}</p>
-        <p className="text-[10px] text-[#6B7A99]">{label} · {context}</p>
+        <p className="text-[18px] font-black text-[#07152F] leading-none tracking-tight">{value}</p>
+        <p className="text-[10px] font-semibold text-[#07152F] mt-0.5">{label}</p>
+        <p className="text-[10px] text-[#6B7A99] mt-0.5">{context}</p>
       </div>
     </div>
   )
@@ -552,9 +589,31 @@ function ActionBtn({ icon, label }: { icon: React.ReactNode; label: string }) {
   )
 }
 
-function QuickAction({ icon, label }: { icon: React.ReactNode; label: string }) {
+function MetricRow({ label, value, highlight, valueClass }: {
+  label: string
+  value: string
+  highlight?: boolean
+  valueClass?: string
+}) {
   return (
-    <button className="flex items-center gap-2 rounded-lg border border-[#DDE6F5] px-3 py-2.5 text-[11px] font-medium text-[#6B7A99] transition hover:bg-[#F3F7FF] hover:text-[#07152F]">
+    <div className="flex items-center justify-between px-4 py-2.5">
+      <span className="text-[11px] text-[#6B7A99]">{label}</span>
+      <span className={`text-[12px] font-semibold ${
+        valueClass ?? (highlight ? 'text-blue-600' : 'text-[#07152F]')
+      }`}>
+        {value}
+      </span>
+    </div>
+  )
+}
+
+function QuickAction({ icon, label, danger }: { icon: React.ReactNode; label: string; danger?: boolean }) {
+  return (
+    <button className={`flex items-center gap-2 rounded-lg border px-3 py-2.5 text-[11px] font-semibold transition hover:bg-[#F3F7FF] ${
+      danger
+        ? 'border-red-200 text-red-500 hover:bg-red-50'
+        : 'border-[#DDE6F5] text-[#6B7A99] hover:text-[#07152F]'
+    }`}>
       {icon}{label}
     </button>
   )

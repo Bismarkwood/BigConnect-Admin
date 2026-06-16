@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { X, Loader2, Pencil } from 'lucide-react'
 import type { Client, CreateClientPayload } from '../types'
 import { updateClient } from '../services/clientApi'
@@ -32,8 +32,12 @@ function EditClientModal({ client, open, onClose, onSaved }: EditClientModalProp
     accountManager: '',
   })
 
-  // Pre-fill form when client changes
-  useEffect(() => {
+  // Keep track of the client we loaded the form for
+  const [prevClient, setPrevClient] = useState<Client | null>(null)
+
+  // Adjust form state when the client prop changes
+  if (client !== prevClient) {
+    setPrevClient(client)
     if (client) {
       setForm({
         businessName: client.businessName,
@@ -48,7 +52,7 @@ function EditClientModal({ client, open, onClose, onSaved }: EditClientModalProp
         accountManager: client.accountManager,
       })
     }
-  }, [client])
+  }
 
   if (!open || !client) return null
 
@@ -76,7 +80,7 @@ function EditClientModal({ client, open, onClose, onSaved }: EditClientModalProp
   }
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-[#07152F]/25 backdrop-blur-sm">
+    <div className="fixed inset-0 z-60 flex items-center justify-center bg-[#07152F]/25 backdrop-blur-sm">
       <div className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl border border-[#DDE6F5] bg-white p-6">
         {/* Header */}
         <div className="flex items-start justify-between mb-6">

@@ -9,5 +9,8 @@
         "statusBar.background": "#753a2b",
         "statusBar.foreground": "#ffffff"
     },
-    "typescript.autoClosingTags": false
+    "typescript.autoClosingTags": false,
+    "editor.tabCompletion": "on",
+    "diffEditor.codeLens": true,
+    "MutableAI.upsell": true
 }
