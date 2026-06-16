@@ -3,8 +3,6 @@ import {
   LayoutDashboard,
   Users,
   Bot,
-  BookOpen,
-  Radio,
   MessageSquare,
   Ticket,
   BarChart3,
@@ -28,8 +26,6 @@ const navGroups = [
     items: [
       { name: 'Clients', path: '/clients', icon: Users },
       { name: 'AI Agents', path: '/ai-agents', icon: Bot },
-      { name: 'Knowledge Base', path: '/knowledge-base', icon: BookOpen },
-      { name: 'Channels', path: '/channels', icon: Radio },
     ],
   },
   {
