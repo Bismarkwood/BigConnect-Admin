@@ -67,6 +67,17 @@ class ApiClient {
     return response.json()
   }
 
+  async patch<T>(endpoint: string, data?: unknown, config?: RequestConfig): Promise<T> {
+    const response = await fetch(this.buildUrl(endpoint, config?.params), {
+      ...config,
+      method: 'PATCH',
+      headers: this.getHeaders(),
+      body: data ? JSON.stringify(data) : undefined,
+    })
+    if (!response.ok) throw new Error(`PATCH ${endpoint} failed: ${response.status}`)
+    return response.json()
+  }
+
   async delete<T>(endpoint: string, config?: RequestConfig): Promise<T> {
     const response = await fetch(this.buildUrl(endpoint, config?.params), {
       ...config,
