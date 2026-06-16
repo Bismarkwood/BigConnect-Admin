@@ -191,6 +191,7 @@ function ClientsPage() {
                         <Eye className="h-4 w-4" strokeWidth={1.5} />
                       </button>
                       <button
+                        onClick={() => setSelectedClient(client)}
                         className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
                         title="Edit"
                       >

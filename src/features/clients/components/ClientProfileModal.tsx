@@ -9,18 +9,22 @@ import {
   Wallet,
   Pencil,
   Ban,
+  Send,
+  PhoneCall,
+  Copy,
+  CheckCircle2,
+  AlertCircle,
+  Clock,
+  BookOpen,
+  Upload,
+  CreditCard,
+  Power,
+  Plus,
   Mail,
-  Phone,
   Globe,
   MapPin,
   UserCog,
   Calendar,
-  CheckCircle2,
-  Circle,
-  AlertCircle,
-  Clock,
-  BookOpen,
-  Activity,
 } from 'lucide-react'
 import type { Client } from '../types'
 
@@ -43,24 +47,24 @@ const tabs: { id: Tab; label: string }[] = [
   { id: 'activity', label: 'Activity Log' },
 ]
 
-const onboardingChecklist = [
-  { label: 'Client Created', desc: 'Client profile was created in the BigConnect SaaS platform.', completed: true, date: 'Jun 1, 2026' },
-  { label: 'Package Assigned', desc: 'Enterprise plan assigned to the client account.', completed: true, date: 'Jun 1, 2026' },
+const onboardingSteps = [
+  { label: 'Client Created', desc: 'Profile created in BigConnect SaaS platform.', completed: true, date: 'Jun 1, 2026' },
+  { label: 'Package Assigned', desc: 'Enterprise plan assigned to account.', completed: true, date: 'Jun 1, 2026' },
   { label: 'Payment Confirmed', desc: 'First payment received and confirmed.', completed: true, date: 'Jun 1, 2026' },
-  { label: 'AI Agent Created', desc: 'AI assistant configured for the client.', completed: true, date: 'Jun 4, 2026' },
+  { label: 'AI Agent Created', desc: 'AI assistant configured for the client.', completed: true, date: 'Jun 3, 2026' },
   { label: 'Knowledge Base Uploaded', desc: 'Training documents uploaded and processed.', completed: true, date: 'Jun 5, 2026' },
-  { label: 'Channel Connected', desc: 'Connect WhatsApp, SMS, Voice, or Web Chat before go-live.', completed: false, date: '' },
-  { label: 'Test Completed', desc: 'Run a test conversation to verify agent behavior.', completed: false, date: '' },
-  { label: 'Go-Live Approved', desc: 'Final approval before making the agent live.', completed: false, date: '' },
+  { label: 'Channel Connected', desc: 'Connect WhatsApp, SMS, Voice, or Web Chat.', completed: false, date: '' },
+  { label: 'Test Completed', desc: 'Run a test conversation to verify behavior.', completed: false, date: '' },
+  { label: 'Go-Live Approved', desc: 'Final approval before making agent live.', completed: false, date: '' },
 ]
 
 const activityLog = [
-  { action: 'David Mensah created client profile.', date: 'Jun 1, 2026 · 9:24 AM' },
-  { action: 'Payment confirmed by Finance Admin.', date: 'Jun 1, 2026 · 10:15 AM' },
-  { action: 'Enterprise plan assigned.', date: 'Jun 1, 2026 · 10:20 AM' },
-  { action: 'AI agent "KFC Support Assistant" created.', date: 'Jun 4, 2026 · 2:30 PM' },
-  { action: 'Knowledge base uploaded (3 documents).', date: 'Jun 5, 2026 · 11:05 AM' },
-  { action: 'WhatsApp channel connection initiated.', date: 'Jun 7, 2026 · 3:45 PM' },
+  { action: 'Created client profile', user: 'David Mensah', module: 'Clients', date: 'Jun 1, 2026', time: '9:24 AM', status: 'completed' },
+  { action: 'Payment confirmed', user: 'Finance Admin', module: 'Finance', date: 'Jun 1, 2026', time: '10:15 AM', status: 'completed' },
+  { action: 'Enterprise plan assigned', user: 'David Mensah', module: 'Billing', date: 'Jun 1, 2026', time: '10:20 AM', status: 'completed' },
+  { action: 'AI agent created', user: 'David Mensah', module: 'AI Agents', date: 'Jun 3, 2026', time: '2:30 PM', status: 'completed' },
+  { action: 'Knowledge base uploaded', user: 'David Mensah', module: 'Knowledge Base', date: 'Jun 5, 2026', time: '11:05 AM', status: 'completed' },
+  { action: 'WhatsApp channel initiated', user: 'System', module: 'Channels', date: 'Jun 7, 2026', time: '3:45 PM', status: 'pending' },
 ]
 
 function ClientProfileModal({ client, open, onClose }: ClientProfileModalProps) {
@@ -68,109 +72,68 @@ function ClientProfileModal({ client, open, onClose }: ClientProfileModalProps) 
 
   if (!open || !client) return null
 
-  const completedSteps = onboardingChecklist.filter((s) => s.completed).length
-  const progress = Math.round((completedSteps / onboardingChecklist.length) * 100)
+  const completedSteps = onboardingSteps.filter((s) => s.completed).length
+  const progress = Math.round((completedSteps / onboardingSteps.length) * 100)
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/20 backdrop-blur-sm">
-      <div className="relative flex h-[90vh] w-[90vw] max-w-[1400px] flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#07152F]/20 backdrop-blur-sm">
+      <div className="relative flex h-[90vh] w-[90vw] max-w-[1400px] flex-col overflow-hidden rounded-3xl border border-[#DDE6F5] bg-white">
 
-        {/* Sticky Header */}
-        <div className="flex-shrink-0 border-b border-slate-100 px-8 py-5">
+        {/* Premium Header */}
+        <div className="flex-shrink-0 bg-[#F3F7FF] border-b border-[#DDE6F5] px-8 py-5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-lg font-bold text-blue-600">
+              <div className="flex h-13 w-13 items-center justify-center rounded-2xl bg-blue-600 text-lg font-bold text-white">
                 {client.businessName.charAt(0)}
               </div>
               <div>
                 <div className="flex items-center gap-3">
-                  <h2 className="text-xl font-bold text-slate-900">{client.businessName}</h2>
-                  <span className="text-[12px] text-slate-400">{client.id} · {client.industry} · {client.city}, {client.country}</span>
+                  <h2 className="text-[20px] font-bold text-[#07152F]">{client.businessName}</h2>
+                  <span className="text-[12px] text-[#6B7A99]">{client.id} · {client.industry} · {client.city}, {client.country}</span>
                 </div>
-                <div className="mt-1.5 flex items-center gap-2">
-                  <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-[11px] font-medium text-emerald-700">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />{client.status}
-                  </span>
-                  <span className="rounded-full bg-blue-50 px-2.5 py-0.5 text-[11px] font-medium text-blue-700">{client.package}</span>
-                  <span className={`rounded-full px-2.5 py-0.5 text-[11px] font-medium ${
-                    client.paymentStatus === 'Paid' ? 'bg-emerald-50 text-emerald-700' :
-                    client.paymentStatus === 'Pending' ? 'bg-amber-50 text-amber-700' : 'bg-red-50 text-red-700'
-                  }`}>{client.paymentStatus}</span>
-                  <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] font-medium text-slate-600">{progress}% Setup</span>
+                <div className="mt-2 flex items-center gap-2">
+                  <StatusChip label={client.status} variant="success" />
+                  <StatusChip label={client.package} variant="blue" />
+                  <StatusChip label={client.paymentStatus} variant={client.paymentStatus === 'Paid' ? 'success' : 'warning'} />
+                  <StatusChip label={`${progress}% Setup`} variant="neutral" />
                 </div>
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <button className="flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-2 text-[12px] font-medium text-slate-600 transition hover:bg-slate-50">
-                <Pencil className="h-3.5 w-3.5" strokeWidth={1.5} />Edit
+              <button className="flex items-center gap-1.5 rounded-lg border border-[#DDE6F5] bg-white px-3.5 py-2 text-[12px] font-medium text-[#6B7A99] transition hover:bg-slate-50">
+                <Pencil className="h-3.5 w-3.5" strokeWidth={1.5} />Edit Client
               </button>
-              <button className="flex items-center gap-1.5 rounded-lg border border-red-200 px-3 py-2 text-[12px] font-medium text-red-600 transition hover:bg-red-50">
+              <button className="flex items-center gap-1.5 rounded-lg border border-red-200 bg-white px-3.5 py-2 text-[12px] font-medium text-red-600 transition hover:bg-red-50">
                 <Ban className="h-3.5 w-3.5" strokeWidth={1.5} />Suspend
               </button>
-              <button onClick={onClose} className="flex h-9 w-9 items-center justify-center rounded-lg text-slate-400 transition hover:bg-slate-100 hover:text-slate-700">
+              <button onClick={onClose} className="flex h-9 w-9 items-center justify-center rounded-lg text-[#6B7A99] transition hover:bg-white hover:text-slate-900">
                 <X className="h-5 w-5" strokeWidth={1.5} />
               </button>
             </div>
           </div>
         </div>
 
-        {/* Summary Strip */}
-        <div className="flex-shrink-0 grid grid-cols-6 gap-4 border-b border-slate-100 px-8 py-4 bg-slate-50/50">
-          <div className="flex items-center gap-3">
-            <Bot className="h-4 w-4 text-violet-600" strokeWidth={1.5} />
-            <div>
-              <p className="text-lg font-bold text-slate-900">{client.aiAgentsCount}</p>
-              <p className="text-[10px] text-slate-500">AI Agents</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <Radio className="h-4 w-4 text-blue-600" strokeWidth={1.5} />
-            <div>
-              <p className="text-lg font-bold text-slate-900">{client.channelsCount}</p>
-              <p className="text-[10px] text-slate-500">Channels</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <MessageSquare className="h-4 w-4 text-amber-600" strokeWidth={1.5} />
-            <div>
-              <p className="text-lg font-bold text-slate-900">142</p>
-              <p className="text-[10px] text-slate-500">Conversations</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <Ticket className="h-4 w-4 text-red-500" strokeWidth={1.5} />
-            <div>
-              <p className="text-lg font-bold text-slate-900">3</p>
-              <p className="text-[10px] text-slate-500">Open Tickets</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <BarChart3 className="h-4 w-4 text-blue-600" strokeWidth={1.5} />
-            <div>
-              <p className="text-lg font-bold text-slate-900">72%</p>
-              <p className="text-[10px] text-slate-500">Usage</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <Wallet className="h-4 w-4 text-emerald-600" strokeWidth={1.5} />
-            <div>
-              <p className="text-lg font-bold text-slate-900">Paid</p>
-              <p className="text-[10px] text-slate-500">Jun 1, 2026</p>
-            </div>
-          </div>
+        {/* Client Health Strip */}
+        <div className="flex-shrink-0 grid grid-cols-6 divide-x divide-[#DDE6F5] border-b border-[#DDE6F5] bg-white">
+          <HealthItem icon={<BarChart3 className="h-4 w-4 text-blue-600" strokeWidth={1.5} />} label="Setup" value={`${progress}%`} context={`${completedSteps} of ${onboardingSteps.length} steps`} />
+          <HealthItem icon={<Bot className="h-4 w-4 text-violet-600" strokeWidth={1.5} />} label="AI Agents" value={String(client.aiAgentsCount)} context="2 Live · 1 Testing" />
+          <HealthItem icon={<Radio className="h-4 w-4 text-blue-600" strokeWidth={1.5} />} label="Channels" value={String(client.channelsCount)} context="WhatsApp, Voice, Web" />
+          <HealthItem icon={<BarChart3 className="h-4 w-4 text-amber-600" strokeWidth={1.5} />} label="Usage" value="72%" context="4,200 / 6,000 calls" />
+          <HealthItem icon={<Ticket className="h-4 w-4 text-red-500" strokeWidth={1.5} />} label="Tickets" value="3" context="1 urgent" />
+          <HealthItem icon={<Wallet className="h-4 w-4 text-emerald-600" strokeWidth={1.5} />} label="Payment" value={client.paymentStatus} context="Jun 1, 2026" />
         </div>
 
-        {/* Tab Navigation */}
-        <div className="flex-shrink-0 border-b border-slate-100 px-8">
-          <div className="flex gap-1 overflow-x-auto">
+        {/* Pill Tab Navigation */}
+        <div className="flex-shrink-0 px-8 py-3 border-b border-[#DDE6F5]">
+          <div className="inline-flex items-center gap-1 rounded-xl bg-[#F3F7FF] p-1">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`whitespace-nowrap px-4 py-3 text-[13px] font-medium transition border-b-2 ${
+                className={`rounded-lg px-4 py-2 text-[12px] font-medium transition ${
                   activeTab === tab.id
-                    ? 'border-blue-600 text-blue-600'
-                    : 'border-transparent text-slate-500 hover:text-slate-700'
+                    ? 'bg-blue-600 text-white'
+                    : 'text-[#6B7A99] hover:text-[#07152F]'
                 }`}
               >
                 {tab.label}
@@ -181,242 +144,444 @@ function ClientProfileModal({ client, open, onClose }: ClientProfileModalProps) 
 
         {/* Scrollable Content */}
         <div className="flex-1 overflow-y-auto px-8 py-6">
-          {/* Overview Tab */}
           {activeTab === 'overview' && (
-            <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
-              {/* Left: 3 cols */}
-              <div className="lg:col-span-3 space-y-6">
-                {/* Client Information */}
-                <div className="rounded-xl border border-slate-200 p-5">
-                  <h3 className="text-[14px] font-semibold text-slate-900 mb-4">Client Information</h3>
-                  <div className="grid grid-cols-2 gap-4">
-                    <InfoRow icon={<Globe className="h-4 w-4" strokeWidth={1.5} />} label="Website" value={client.website || '—'} />
-                    <InfoRow icon={<MapPin className="h-4 w-4" strokeWidth={1.5} />} label="Location" value={`${client.city}, ${client.country}`} />
-                    <InfoRow icon={<UserCog className="h-4 w-4" strokeWidth={1.5} />} label="Account Manager" value={client.accountManager} />
-                    <InfoRow icon={<Calendar className="h-4 w-4" strokeWidth={1.5} />} label="Date Added" value={client.dateAdded} />
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_340px]">
+              {/* Left Column */}
+              <div className="space-y-5">
+                {/* Client Snapshot */}
+                <div className="rounded-xl border border-[#DDE6F5] overflow-hidden">
+                  {/* Card header with gradient */}
+                  <div className="bg-gradient-to-r from-[#F3F7FF] to-white px-5 py-4 border-b border-[#DDE6F5]">
+                    <div className="flex items-center gap-4">
+                      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-600 text-xl font-bold text-white">
+                        {client.businessName.charAt(0)}
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="text-[15px] font-bold text-[#07152F]">{client.businessName}</h4>
+                        <p className="text-[12px] text-[#6B7A99] mt-0.5">{client.industry} · {client.city}, {client.country}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-[10px] uppercase tracking-wider text-[#6B7A99]">Client ID</p>
+                        <p className="text-[13px] font-mono font-semibold text-blue-600">{client.id}</p>
+                      </div>
+                    </div>
                   </div>
-                  <div className="mt-4 border-t border-slate-100 pt-4">
-                    <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-3">Primary Contact</p>
-                    <div className="grid grid-cols-2 gap-4">
-                      <InfoRow icon={<UserCog className="h-4 w-4" strokeWidth={1.5} />} label="Name" value={client.contactPerson} />
-                      <InfoRow icon={<Mail className="h-4 w-4" strokeWidth={1.5} />} label="Email" value={client.email} />
-                      <InfoRow icon={<Phone className="h-4 w-4" strokeWidth={1.5} />} label="Phone" value={client.phone} />
+                  {/* Details grid */}
+                  <div className="px-5 py-4">
+                    <div className="grid grid-cols-3 gap-y-4 gap-x-6">
+                      <SnapshotField icon={<BarChart3 className="h-3.5 w-3.5 text-blue-600" strokeWidth={1.5} />} label="Status" value={client.status} highlight />
+                      <SnapshotField icon={<Wallet className="h-3.5 w-3.5 text-emerald-600" strokeWidth={1.5} />} label="Package" value={client.package} />
+                      <SnapshotField icon={<Calendar className="h-3.5 w-3.5 text-[#6B7A99]" strokeWidth={1.5} />} label="Date Added" value={client.dateAdded} />
+                      <SnapshotField icon={<Globe className="h-3.5 w-3.5 text-blue-600" strokeWidth={1.5} />} label="Website" value={client.website || '—'} isLink />
+                      <SnapshotField icon={<MapPin className="h-3.5 w-3.5 text-[#6B7A99]" strokeWidth={1.5} />} label="Location" value={`${client.city}, ${client.country}`} />
+                      <SnapshotField icon={<UserCog className="h-3.5 w-3.5 text-[#6B7A99]" strokeWidth={1.5} />} label="Account Manager" value={client.accountManager} />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Primary Contact */}
+                <div className="rounded-xl border border-[#DDE6F5] overflow-hidden">
+                  <div className="px-5 py-3.5 bg-[#F3F7FF] border-b border-[#DDE6F5]">
+                    <h4 className="text-[13px] font-semibold text-[#07152F]">Primary Contact</h4>
+                  </div>
+                  <div className="px-5 py-4">
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-[12px] font-bold text-blue-600">
+                        {client.contactPerson.split(' ').map(n => n[0]).join('')}
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-[14px] font-semibold text-[#07152F]">{client.contactPerson}</p>
+                        <p className="text-[12px] text-[#6B7A99]">Operations Manager</p>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3 mb-4">
+                      <div className="flex items-center gap-2.5 rounded-lg bg-[#F3F7FF] px-3 py-2.5">
+                        <Mail className="h-3.5 w-3.5 text-blue-600" strokeWidth={1.5} />
+                        <span className="text-[12px] text-[#07152F]">{client.email}</span>
+                      </div>
+                      <div className="flex items-center gap-2.5 rounded-lg bg-[#F3F7FF] px-3 py-2.5">
+                        <PhoneCall className="h-3.5 w-3.5 text-blue-600" strokeWidth={1.5} />
+                        <span className="text-[12px] text-[#07152F]">{client.phone}</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2 border-t border-[#DDE6F5] pt-3">
+                      <ActionBtn icon={<Send className="h-3.5 w-3.5" strokeWidth={1.5} />} label="Send Email" />
+                      <ActionBtn icon={<PhoneCall className="h-3.5 w-3.5" strokeWidth={1.5} />} label="Call" />
+                      <ActionBtn icon={<Copy className="h-3.5 w-3.5" strokeWidth={1.5} />} label="Copy Contact" />
                     </div>
                   </div>
                 </div>
 
                 {/* Onboarding Progress */}
-                <div className="rounded-xl border border-slate-200 p-5">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-[14px] font-semibold text-slate-900">Onboarding Progress</h3>
-                    <span className="text-[13px] font-bold text-blue-600">{completedSteps}/{onboardingChecklist.length}</span>
-                  </div>
-                  <div className="h-2 w-full rounded-full bg-slate-100 mb-5">
-                    <div className="h-full rounded-full bg-blue-600 transition-all" style={{ width: `${progress}%` }} />
-                  </div>
-                  <div className="space-y-3">
-                    {onboardingChecklist.map((item) => (
-                      <div key={item.label} className="flex items-start gap-3">
-                        {item.completed ? (
-                          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" strokeWidth={1.5} />
-                        ) : (
-                          <Circle className="mt-0.5 h-4 w-4 shrink-0 text-slate-300" strokeWidth={1.5} />
-                        )}
-                        <div className="flex-1">
-                          <p className={`text-[13px] font-medium ${item.completed ? 'text-slate-900' : 'text-slate-500'}`}>{item.label}</p>
-                          <p className="text-[11px] text-slate-400">{item.desc}</p>
-                          {item.completed && item.date && (
-                            <p className="text-[10px] text-emerald-600 mt-0.5">Completed · {item.date}</p>
-                          )}
-                          {!item.completed && (
-                            <p className="text-[10px] text-amber-600 mt-0.5">Pending</p>
-                          )}
-                        </div>
+                <div className="rounded-xl border border-[#DDE6F5] overflow-hidden">
+                  {/* Header with progress */}
+                  <div className="flex items-center justify-between bg-[#F3F7FF] px-5 py-4 border-b border-[#DDE6F5]">
+                    <div>
+                      <h4 className="text-[13px] font-semibold text-[#07152F]">Onboarding Progress</h4>
+                      <p className="text-[11px] text-[#6B7A99] mt-0.5">{completedSteps} of {onboardingSteps.length} steps completed</p>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="w-32 h-2 rounded-full bg-white">
+                        <div className="h-full rounded-full bg-blue-600 transition-all" style={{ width: `${progress}%` }} />
                       </div>
-                    ))}
+                      <span className="text-[14px] font-bold text-blue-600">{progress}%</span>
+                    </div>
+                  </div>
+
+                  {/* Steps grid */}
+                  <div className="px-5 py-4">
+                    <div className="grid grid-cols-4 gap-3">
+                      {onboardingSteps.map((step, i) => {
+                        const isCurrent = !step.completed && i === completedSteps
+                        return (
+                          <div
+                            key={step.label}
+                            className={`relative rounded-xl border p-3.5 transition ${
+                              step.completed
+                                ? 'border-emerald-200 bg-emerald-50/50'
+                                : isCurrent
+                                  ? 'border-blue-300 bg-blue-50/50'
+                                  : 'border-[#DDE6F5] bg-white'
+                            }`}
+                          >
+                            {/* Step number */}
+                            <div className={`flex h-7 w-7 items-center justify-center rounded-full text-[11px] font-bold mb-2.5 ${
+                              step.completed
+                                ? 'bg-emerald-500 text-white'
+                                : isCurrent
+                                  ? 'bg-blue-600 text-white'
+                                  : 'bg-[#F3F7FF] text-[#6B7A99]'
+                            }`}>
+                              {step.completed ? (
+                                <CheckCircle2 className="h-3.5 w-3.5" strokeWidth={2.5} />
+                              ) : (
+                                i + 1
+                              )}
+                            </div>
+
+                            {/* Step info */}
+                            <p className={`text-[12px] font-semibold leading-tight ${
+                              step.completed ? 'text-[#07152F]' : isCurrent ? 'text-blue-700' : 'text-[#6B7A99]'
+                            }`}>
+                              {step.label}
+                            </p>
+                            <p className="text-[10px] text-[#6B7A99] mt-1 leading-snug">{step.desc}</p>
+
+                            {/* Status badge */}
+                            <div className="mt-2.5">
+                              {step.completed && step.date ? (
+                                <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-[9px] font-medium text-emerald-700">
+                                  <CheckCircle2 className="h-2.5 w-2.5" strokeWidth={2} />{step.date}
+                                </span>
+                              ) : isCurrent ? (
+                                <span className="inline-flex items-center gap-1 rounded-full bg-blue-100 px-2 py-0.5 text-[9px] font-medium text-blue-700">
+                                  <Clock className="h-2.5 w-2.5" strokeWidth={2} />In Progress
+                                </span>
+                              ) : (
+                                <span className="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-[9px] font-medium text-[#6B7A99]">
+                                  Pending
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        )
+                      })}
+                    </div>
                   </div>
                 </div>
 
-                {/* Recent Activity */}
-                <div className="rounded-xl border border-slate-200 p-5">
-                  <h3 className="text-[14px] font-semibold text-slate-900 mb-4">Recent Activity</h3>
-                  <div className="space-y-3">
-                    {activityLog.map((item, i) => (
-                      <div key={i} className="flex items-start gap-3">
-                        <div className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-blue-400" />
-                        <div className="flex-1">
-                          <p className="text-[13px] text-slate-700">{item.action}</p>
-                          <p className="text-[11px] text-slate-400">{item.date}</p>
-                        </div>
-                      </div>
-                    ))}
+                {/* Recent Activity Table */}
+                <div className="rounded-xl border border-[#DDE6F5] overflow-hidden">
+                  <div className="flex items-center justify-between bg-[#F3F7FF] px-5 py-3.5 border-b border-[#DDE6F5]">
+                    <h4 className="text-[13px] font-semibold text-[#07152F]">Recent Activity</h4>
+                    <span className="text-[11px] text-[#6B7A99]">{activityLog.length} events</span>
+                  </div>
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="border-b border-[#DDE6F5]">
+                          <th className="px-5 py-3 text-left text-[10px] font-semibold uppercase tracking-wider text-[#6B7A99]">Action</th>
+                          <th className="px-5 py-3 text-left text-[10px] font-semibold uppercase tracking-wider text-[#6B7A99]">User</th>
+                          <th className="px-5 py-3 text-left text-[10px] font-semibold uppercase tracking-wider text-[#6B7A99]">Module</th>
+                          <th className="px-5 py-3 text-left text-[10px] font-semibold uppercase tracking-wider text-[#6B7A99]">Date</th>
+                          <th className="px-5 py-3 text-left text-[10px] font-semibold uppercase tracking-wider text-[#6B7A99]">Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {activityLog.map((item, i) => (
+                          <tr key={i} className="border-b border-[#F3F7FF] last:border-0 hover:bg-[#F3F7FF]/50 transition">
+                            <td className="px-5 py-3">
+                              <p className="text-[12px] font-medium text-[#07152F]">{item.action}</p>
+                            </td>
+                            <td className="px-5 py-3">
+                              <div className="flex items-center gap-2">
+                                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-50 text-[9px] font-bold text-blue-600">
+                                  {item.user.split(' ').map(n => n[0]).join('')}
+                                </div>
+                                <span className="text-[12px] text-[#07152F]">{item.user}</span>
+                              </div>
+                            </td>
+                            <td className="px-5 py-3">
+                              <span className="inline-flex rounded-md bg-[#F3F7FF] px-2 py-0.5 text-[10px] font-medium text-blue-700">
+                                {item.module}
+                              </span>
+                            </td>
+                            <td className="px-5 py-3">
+                              <p className="text-[12px] text-[#07152F]">{item.date}</p>
+                              <p className="text-[10px] text-[#6B7A99]">{item.time}</p>
+                            </td>
+                            <td className="px-5 py-3">
+                              <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ${
+                                item.status === 'completed'
+                                  ? 'bg-emerald-50 text-emerald-700'
+                                  : 'bg-amber-50 text-amber-700'
+                              }`}>
+                                <span className={`h-1.5 w-1.5 rounded-full ${item.status === 'completed' ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+                                {item.status === 'completed' ? 'Done' : 'Pending'}
+                              </span>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
 
-              {/* Right: 2 cols */}
-              <div className="lg:col-span-2 space-y-6">
+              {/* Right Column */}
+              <div className="space-y-5">
+                {/* Attention Needed */}
+                <div className="rounded-xl border border-amber-200 bg-amber-50/60 p-5">
+                  <div className="flex items-center gap-2 mb-3">
+                    <AlertCircle className="h-4 w-4 text-amber-600" strokeWidth={1.5} />
+                    <h4 className="text-[13px] font-semibold text-[#07152F]">Attention Needed</h4>
+                  </div>
+                  <div className="space-y-2.5 mb-4">
+                    <AttentionItem text="Channel connection is still pending." />
+                    <AttentionItem text="Test conversation has not been completed." />
+                    <AttentionItem text="Go-live approval is not done." />
+                    <AttentionItem text="3 open tickets need review." />
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <ActionBtn icon={<Radio className="h-3.5 w-3.5" strokeWidth={1.5} />} label="Connect Channel" />
+                    <ActionBtn icon={<MessageSquare className="h-3.5 w-3.5" strokeWidth={1.5} />} label="Run Test" />
+                    <ActionBtn icon={<Ticket className="h-3.5 w-3.5" strokeWidth={1.5} />} label="Review Tickets" />
+                  </div>
+                </div>
+
                 {/* Subscription */}
-                <div className="rounded-xl border border-slate-200 p-5">
-                  <h3 className="text-[14px] font-semibold text-slate-900 mb-4">Subscription</h3>
-                  <div className="space-y-3">
-                    <div className="flex justify-between text-[13px]"><span className="text-slate-500">Plan</span><span className="font-medium text-slate-900">{client.package}</span></div>
-                    <div className="flex justify-between text-[13px]"><span className="text-slate-500">Billing</span><span className="font-medium text-slate-900">Monthly</span></div>
-                    <div className="flex justify-between text-[13px]"><span className="text-slate-500">Amount</span><span className="font-semibold text-slate-900">GHS 2,500/mo</span></div>
-                    <div className="flex justify-between text-[13px]"><span className="text-slate-500">Next billing</span><span className="font-medium text-slate-900">Jul 15, 2026</span></div>
+                <div className="rounded-xl border border-[#DDE6F5] p-5">
+                  <h4 className="text-[13px] font-semibold text-[#07152F] mb-3">Subscription</h4>
+                  <div className="space-y-2.5">
+                    <div className="flex justify-between text-[12px]"><span className="text-[#6B7A99]">Plan</span><span className="font-medium text-[#07152F]">{client.package}</span></div>
+                    <div className="flex justify-between text-[12px]"><span className="text-[#6B7A99]">Billing</span><span className="font-medium text-[#07152F]">Monthly</span></div>
+                    <div className="flex justify-between text-[12px]"><span className="text-[#6B7A99]">Amount</span><span className="font-semibold text-[#07152F]">GHS 2,500/mo</span></div>
+                    <div className="flex justify-between text-[12px]"><span className="text-[#6B7A99]">Next billing</span><span className="font-medium text-[#07152F]">Jul 15, 2026</span></div>
                   </div>
                 </div>
 
                 {/* Payment */}
-                <div className="rounded-xl border border-slate-200 p-5">
-                  <h3 className="text-[14px] font-semibold text-slate-900 mb-4">Payment Status</h3>
-                  <div className="space-y-3">
-                    <div className="flex justify-between text-[13px]"><span className="text-slate-500">Status</span><span className="font-medium text-emerald-600">Paid</span></div>
-                    <div className="flex justify-between text-[13px]"><span className="text-slate-500">Last payment</span><span className="font-medium text-slate-900">Jun 1, 2026</span></div>
-                    <div className="flex justify-between text-[13px]"><span className="text-slate-500">Method</span><span className="font-medium text-slate-900">Mobile Money</span></div>
-                    <div className="flex justify-between text-[13px]"><span className="text-slate-500">Last invoice</span><span className="font-medium text-blue-600">INV-00123</span></div>
+                <div className="rounded-xl border border-[#DDE6F5] p-5">
+                  <h4 className="text-[13px] font-semibold text-[#07152F] mb-3">Payment Status</h4>
+                  <div className="space-y-2.5">
+                    <div className="flex justify-between text-[12px]"><span className="text-[#6B7A99]">Status</span><span className="font-medium text-emerald-600">Paid</span></div>
+                    <div className="flex justify-between text-[12px]"><span className="text-[#6B7A99]">Last payment</span><span className="font-medium text-[#07152F]">Jun 1, 2026</span></div>
+                    <div className="flex justify-between text-[12px]"><span className="text-[#6B7A99]">Method</span><span className="font-medium text-[#07152F]">Mobile Money</span></div>
+                    <div className="flex justify-between text-[12px]"><span className="text-[#6B7A99]">Invoice</span><span className="font-medium text-blue-600">INV-00123</span></div>
+                  </div>
+                  <div className="mt-3 flex gap-2 border-t border-[#DDE6F5] pt-3">
+                    <ActionBtn icon={<CreditCard className="h-3.5 w-3.5" strokeWidth={1.5} />} label="View Invoice" />
+                    <ActionBtn icon={<Wallet className="h-3.5 w-3.5" strokeWidth={1.5} />} label="Record Payment" />
                   </div>
                 </div>
 
                 {/* Usage */}
-                <div className="rounded-xl border border-slate-200 p-5">
-                  <h3 className="text-[14px] font-semibold text-slate-900 mb-3">Usage This Month</h3>
-                  <div className="h-2 w-full rounded-full bg-slate-100 mb-2">
+                <div className="rounded-xl border border-[#DDE6F5] p-5">
+                  <h4 className="text-[13px] font-semibold text-[#07152F] mb-3">Usage This Month</h4>
+                  <div className="h-2 w-full rounded-full bg-[#F3F7FF] mb-1.5">
                     <div className="h-full rounded-full bg-blue-600" style={{ width: '72%' }} />
                   </div>
-                  <p className="text-[11px] text-slate-400 mb-4">4,200 / 6,000 API calls</p>
+                  <p className="text-[10px] text-[#6B7A99] mb-3">4,200 / 6,000 API calls (72%)</p>
                   <div className="space-y-2">
-                    <div className="flex justify-between text-[12px]"><span className="text-slate-500">Conversations</span><span className="font-medium text-slate-700">142</span></div>
-                    <div className="flex justify-between text-[12px]"><span className="text-slate-500">Call minutes</span><span className="font-medium text-slate-700">320</span></div>
-                    <div className="flex justify-between text-[12px]"><span className="text-slate-500">SMS sent</span><span className="font-medium text-slate-700">800</span></div>
-                    <div className="flex justify-between text-[12px]"><span className="text-slate-500">WhatsApp messages</span><span className="font-medium text-slate-700">1,120</span></div>
+                    <div className="flex justify-between text-[11px]"><span className="text-[#6B7A99]">Conversations</span><span className="font-medium text-[#07152F]">142</span></div>
+                    <div className="flex justify-between text-[11px]"><span className="text-[#6B7A99]">Call minutes</span><span className="font-medium text-[#07152F]">320</span></div>
+                    <div className="flex justify-between text-[11px]"><span className="text-[#6B7A99]">SMS sent</span><span className="font-medium text-[#07152F]">800</span></div>
+                    <div className="flex justify-between text-[11px]"><span className="text-[#6B7A99]">WhatsApp</span><span className="font-medium text-[#07152F]">1,120</span></div>
                   </div>
                 </div>
 
-                {/* Attention Needed */}
-                <div className="rounded-xl border border-amber-200 bg-amber-50/50 p-5">
-                  <div className="flex items-center gap-2 mb-3">
-                    <AlertCircle className="h-4 w-4 text-amber-600" strokeWidth={1.5} />
-                    <h3 className="text-[14px] font-semibold text-slate-900">Attention Needed</h3>
-                  </div>
-                  <div className="space-y-2">
-                    <p className="flex items-center gap-2 text-[12px] text-slate-700"><Clock className="h-3 w-3 text-amber-500" strokeWidth={1.5} />Channel connection is still pending.</p>
-                    <p className="flex items-center gap-2 text-[12px] text-slate-700"><Clock className="h-3 w-3 text-amber-500" strokeWidth={1.5} />Test conversation has not been completed.</p>
-                    <p className="flex items-center gap-2 text-[12px] text-slate-700"><Clock className="h-3 w-3 text-amber-500" strokeWidth={1.5} />Go-live approval is not yet done.</p>
-                    <p className="flex items-center gap-2 text-[12px] text-slate-700"><Ticket className="h-3 w-3 text-amber-500" strokeWidth={1.5} />3 open tickets need review.</p>
+                {/* Quick Actions */}
+                <div className="rounded-xl border border-[#DDE6F5] p-5">
+                  <h4 className="text-[13px] font-semibold text-[#07152F] mb-3">Quick Actions</h4>
+                  <div className="grid grid-cols-2 gap-2">
+                    <QuickAction icon={<Pencil className="h-3.5 w-3.5" strokeWidth={1.5} />} label="Edit Client" />
+                    <QuickAction icon={<Bot className="h-3.5 w-3.5" strokeWidth={1.5} />} label="Create Agent" />
+                    <QuickAction icon={<Upload className="h-3.5 w-3.5" strokeWidth={1.5} />} label="Upload KB" />
+                    <QuickAction icon={<Radio className="h-3.5 w-3.5" strokeWidth={1.5} />} label="Connect Channel" />
+                    <QuickAction icon={<CreditCard className="h-3.5 w-3.5" strokeWidth={1.5} />} label="Record Payment" />
+                    <QuickAction icon={<Power className="h-3.5 w-3.5" strokeWidth={1.5} />} label="Suspend" />
                   </div>
                 </div>
               </div>
             </div>
           )}
 
-          {/* AI Agents Tab */}
-          {activeTab === 'agents' && (
-            <TabPlaceholder
-              icon={<Bot className="h-10 w-10 text-slate-300" strokeWidth={1.5} />}
-              title="AI Agents"
-              desc="Manage AI assistants assigned to this client."
-              action="Create AI Agent"
-            />
-          )}
-
-          {/* Knowledge Base Tab */}
-          {activeTab === 'knowledge' && (
-            <TabPlaceholder
-              icon={<BookOpen className="h-10 w-10 text-slate-300" strokeWidth={1.5} />}
-              title="Knowledge Base"
-              desc="Approved business information used by the AI assistant."
-              action="Upload Document"
-            />
-          )}
-
-          {/* Channels Tab */}
-          {activeTab === 'channels' && (
-            <TabPlaceholder
-              icon={<Radio className="h-10 w-10 text-slate-300" strokeWidth={1.5} />}
-              title="Channels"
-              desc="Manage customer communication channels for this client."
-              action="Connect Channel"
-            />
-          )}
-
-          {/* Conversations Tab */}
-          {activeTab === 'conversations' && (
-            <TabPlaceholder
-              icon={<MessageSquare className="h-10 w-10 text-slate-300" strokeWidth={1.5} />}
-              title="Conversations"
-              desc="Customer interactions handled by AI agents."
-              action=""
-            />
-          )}
-
-          {/* Tickets Tab */}
-          {activeTab === 'tickets' && (
-            <TabPlaceholder
-              icon={<Ticket className="h-10 w-10 text-slate-300" strokeWidth={1.5} />}
-              title="Tickets"
-              desc="Escalated issues and support requests."
-              action="Create Ticket"
-            />
-          )}
-
-          {/* Usage & Finance Tab */}
-          {activeTab === 'finance' && (
-            <TabPlaceholder
-              icon={<Wallet className="h-10 w-10 text-slate-300" strokeWidth={1.5} />}
-              title="Usage & Finance"
-              desc="API usage, billing, invoices, and payment history."
-              action="View Invoice"
-            />
-          )}
-
-          {/* Activity Log Tab */}
+          {/* Other tabs - placeholders */}
+          {activeTab === 'agents' && <TabPlaceholder icon={<Bot className="h-10 w-10 text-[#DDE6F5]" strokeWidth={1.5} />} title="AI Agents" desc="Manage AI assistants assigned to this client." action="Create AI Agent" />}
+          {activeTab === 'knowledge' && <TabPlaceholder icon={<BookOpen className="h-10 w-10 text-[#DDE6F5]" strokeWidth={1.5} />} title="Knowledge Base" desc="Approved business information used by the AI assistant." action="Upload Document" />}
+          {activeTab === 'channels' && <TabPlaceholder icon={<Radio className="h-10 w-10 text-[#DDE6F5]" strokeWidth={1.5} />} title="Channels" desc="Manage customer communication channels for this client." action="Connect Channel" />}
+          {activeTab === 'conversations' && <TabPlaceholder icon={<MessageSquare className="h-10 w-10 text-[#DDE6F5]" strokeWidth={1.5} />} title="Conversations" desc="Customer interactions handled by AI agents." action="" />}
+          {activeTab === 'tickets' && <TabPlaceholder icon={<Ticket className="h-10 w-10 text-[#DDE6F5]" strokeWidth={1.5} />} title="Tickets" desc="Escalated issues and support requests." action="Create Ticket" />}
+          {activeTab === 'finance' && <TabPlaceholder icon={<Wallet className="h-10 w-10 text-[#DDE6F5]" strokeWidth={1.5} />} title="Usage & Finance" desc="API usage, billing, invoices, and payment history." action="View Invoice" />}
           {activeTab === 'activity' && (
-            <div className="rounded-xl border border-slate-200 p-5">
-              <h3 className="text-[14px] font-semibold text-slate-900 mb-1">Activity Log</h3>
-              <p className="text-[12px] text-slate-500 mb-5">Track actions taken on this client account.</p>
-              <div className="space-y-4">
-                {activityLog.map((item, i) => (
-                  <div key={i} className="flex items-start gap-4 border-b border-slate-50 pb-4 last:border-0 last:pb-0">
-                    <div className="mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-50">
-                      <Activity className="h-3.5 w-3.5 text-blue-600" strokeWidth={1.5} />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-[13px] text-slate-800">{item.action}</p>
-                      <p className="text-[11px] text-slate-400 mt-0.5">{item.date}</p>
-                    </div>
-                  </div>
-                ))}
+            <div className="rounded-xl border border-[#DDE6F5] overflow-hidden">
+              <div className="flex items-center justify-between bg-[#F3F7FF] px-5 py-3.5 border-b border-[#DDE6F5]">
+                <div>
+                  <h4 className="text-[13px] font-semibold text-[#07152F]">Activity Log</h4>
+                  <p className="text-[11px] text-[#6B7A99] mt-0.5">Track all actions taken on this client account</p>
+                </div>
+                <span className="text-[11px] text-[#6B7A99]">{activityLog.length} events</span>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-[#DDE6F5]">
+                      <th className="px-5 py-3 text-left text-[10px] font-semibold uppercase tracking-wider text-[#6B7A99]">Action</th>
+                      <th className="px-5 py-3 text-left text-[10px] font-semibold uppercase tracking-wider text-[#6B7A99]">User</th>
+                      <th className="px-5 py-3 text-left text-[10px] font-semibold uppercase tracking-wider text-[#6B7A99]">Module</th>
+                      <th className="px-5 py-3 text-left text-[10px] font-semibold uppercase tracking-wider text-[#6B7A99]">Date</th>
+                      <th className="px-5 py-3 text-left text-[10px] font-semibold uppercase tracking-wider text-[#6B7A99]">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {activityLog.map((item, i) => (
+                      <tr key={i} className="border-b border-[#F3F7FF] last:border-0 hover:bg-[#F3F7FF]/50 transition">
+                        <td className="px-5 py-3.5">
+                          <p className="text-[12px] font-medium text-[#07152F]">{item.action}</p>
+                        </td>
+                        <td className="px-5 py-3.5">
+                          <div className="flex items-center gap-2">
+                            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-50 text-[9px] font-bold text-blue-600">
+                              {item.user.split(' ').map(n => n[0]).join('')}
+                            </div>
+                            <span className="text-[12px] text-[#07152F]">{item.user}</span>
+                          </div>
+                        </td>
+                        <td className="px-5 py-3.5">
+                          <span className="inline-flex rounded-md bg-[#F3F7FF] px-2 py-0.5 text-[10px] font-medium text-blue-700">
+                            {item.module}
+                          </span>
+                        </td>
+                        <td className="px-5 py-3.5">
+                          <p className="text-[12px] text-[#07152F]">{item.date}</p>
+                          <p className="text-[10px] text-[#6B7A99]">{item.time}</p>
+                        </td>
+                        <td className="px-5 py-3.5">
+                          <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ${
+                            item.status === 'completed'
+                              ? 'bg-emerald-50 text-emerald-700'
+                              : 'bg-amber-50 text-amber-700'
+                          }`}>
+                            <span className={`h-1.5 w-1.5 rounded-full ${item.status === 'completed' ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+                            {item.status === 'completed' ? 'Done' : 'Pending'}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
           )}
+        </div>
+
+        {/* Sticky Footer */}
+        <div className="flex-shrink-0 flex items-center justify-between border-t border-[#DDE6F5] bg-[#F3F7FF] px-8 py-3">
+          <span className="text-[11px] text-[#6B7A99]">Last updated Jun 15, 2026</span>
+          <div className="flex items-center gap-2">
+            <button className="rounded-lg border border-[#DDE6F5] bg-white px-3.5 py-2 text-[12px] font-medium text-[#6B7A99] transition hover:bg-slate-50">Save Note</button>
+            <button className="rounded-lg bg-blue-600 px-4 py-2 text-[12px] font-medium text-white transition hover:bg-blue-700">Edit Client</button>
+          </div>
         </div>
       </div>
     </div>
   )
 }
 
-function InfoRow({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
+// --- Sub-components ---
+
+function StatusChip({ label, variant }: { label: string; variant: 'success' | 'warning' | 'blue' | 'neutral' }) {
+  const styles = {
+    success: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+    warning: 'bg-amber-50 text-amber-700 border-amber-200',
+    blue: 'bg-blue-50 text-blue-700 border-blue-200',
+    neutral: 'bg-slate-100 text-[#6B7A99] border-slate-200',
+  }
   return (
-    <div className="flex items-center gap-2.5">
-      <span className="text-slate-400">{icon}</span>
+    <span className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-[10px] font-semibold ${styles[variant]}`}>
+      {label}
+    </span>
+  )
+}
+
+function HealthItem({ icon, label, value, context }: { icon: React.ReactNode; label: string; value: string; context: string }) {
+  return (
+    <div className="flex items-center gap-3 px-5 py-3.5">
+      {icon}
       <div>
-        <p className="text-[10px] text-slate-400">{label}</p>
-        <p className="text-[13px] text-slate-800">{value}</p>
+        <p className="text-[15px] font-bold text-[#07152F]">{value}</p>
+        <p className="text-[10px] text-[#6B7A99]">{label} · {context}</p>
       </div>
     </div>
   )
 }
 
+function SnapshotField({ icon, label, value, isLink, highlight }: { icon: React.ReactNode; label: string; value: string; isLink?: boolean; highlight?: boolean }) {
+  return (
+    <div className="flex items-start gap-2.5">
+      <div className="mt-0.5">{icon}</div>
+      <div>
+        <p className="text-[10px] text-[#6B7A99] uppercase tracking-wide">{label}</p>
+        <p className={`text-[13px] mt-0.5 font-medium ${highlight ? 'text-emerald-600' : isLink ? 'text-blue-600' : 'text-[#07152F]'}`}>{value}</p>
+      </div>
+    </div>
+  )
+}
+
+function ActionBtn({ icon, label }: { icon: React.ReactNode; label: string }) {
+  return (
+    <button className="inline-flex items-center gap-1.5 rounded-lg border border-[#DDE6F5] bg-white px-2.5 py-1.5 text-[11px] font-medium text-[#6B7A99] transition hover:bg-[#F3F7FF] hover:text-[#07152F]">
+      {icon}{label}
+    </button>
+  )
+}
+
+function QuickAction({ icon, label }: { icon: React.ReactNode; label: string }) {
+  return (
+    <button className="flex items-center gap-2 rounded-lg border border-[#DDE6F5] px-3 py-2.5 text-[11px] font-medium text-[#6B7A99] transition hover:bg-[#F3F7FF] hover:text-[#07152F]">
+      {icon}{label}
+    </button>
+  )
+}
+
+function AttentionItem({ text }: { text: string }) {
+  return (
+    <p className="flex items-center gap-2 text-[12px] text-[#07152F]">
+      <Clock className="h-3 w-3 shrink-0 text-amber-500" strokeWidth={1.5} />
+      {text}
+    </p>
+  )
+}
+
 function TabPlaceholder({ icon, title, desc, action }: { icon: React.ReactNode; title: string; desc: string; action: string }) {
   return (
-    <div className="rounded-xl border border-slate-200 p-12 text-center">
+    <div className="rounded-xl border border-[#DDE6F5] p-12 text-center">
       <div className="flex justify-center">{icon}</div>
-      <p className="mt-4 text-[14px] font-medium text-slate-600">{title}</p>
-      <p className="mt-1 text-[12px] text-slate-400">{desc}</p>
+      <p className="mt-4 text-[14px] font-semibold text-[#07152F]">{title}</p>
+      <p className="mt-1 text-[12px] text-[#6B7A99]">{desc}</p>
       {action && (
-        <button className="mt-5 rounded-lg bg-blue-600 px-4 py-2 text-[13px] font-medium text-white transition hover:bg-blue-700">
-          {action}
+        <button className="mt-5 inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-4 py-2 text-[12px] font-medium text-white transition hover:bg-blue-700">
+          <Plus className="h-3.5 w-3.5" strokeWidth={1.5} />{action}
         </button>
       )}
     </div>
