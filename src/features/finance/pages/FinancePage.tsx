@@ -12,8 +12,7 @@ import {
   Trash2,
 } from 'lucide-react'
 import InvoicePreviewModal from '../components/InvoicePreviewModal'
-import ExportReportModal, { type ExportReportPayload } from '../components/ExportReportModal'
-import ReportPreviewModal from '../components/ReportPreviewModal'
+import ExportReportModal from '../components/ExportReportModal'
 import type { PaymentStatus, WebhookStatus } from '../types'
 
 // Mock payments
@@ -82,7 +81,6 @@ function FinancePage() {
   const [viewInvoiceId, setViewInvoiceId] = useState<string | null>(null)
   const [isExportModalOpen, setIsExportModalOpen] = useState(false)
   const [exportHistory, setExportHistory] = useState<ExportHistoryItem[]>(initialHistory)
-  const [selectedReportForPreview, setSelectedReportForPreview] = useState<ExportHistoryItem | null>(null)
 
   const successful = mockPayments.filter((p) => p.status === 'Successful').length
   const pending = mockPayments.filter((p) => p.status === 'Pending').length
@@ -93,53 +91,6 @@ function FinancePage() {
     p.clientName.toLowerCase().includes(searchQuery.toLowerCase()) ||
     p.id.toLowerCase().includes(searchQuery.toLowerCase())
   )
-
-  const handleGenerateReport = (payload: ExportReportPayload) => {
-    const reportTypeLabel = {
-      finance_summary: 'Finance Summary Report',
-      payments: 'Payments Report',
-      invoices: 'Invoices Report',
-      receipts: 'Receipts Report',
-      failed_payments: 'Failed Payments Report',
-      gateway_transactions: 'Gateway Transactions Report',
-      reconciliation: 'Reconciliation Report',
-      subscription_revenue: 'Subscription Revenue Report'
-    }[payload.reportType] || 'Finance Report'
-
-    const datePeriodLabel = {
-      today: 'Today',
-      custom_date: payload.customDate ? `Custom: ${payload.customDate}` : 'Custom Date',
-      date_range: payload.startDate && payload.endDate ? `${payload.startDate} to ${payload.endDate}` : 'Date Range',
-      last_1_month: 'Last 1 Month',
-      last_3_months: 'Last 3 Months',
-      last_6_months: 'Last 6 Months'
-    }[payload.datePreset]
-
-    const newReportId = `RPT-00${exportHistory.length + 1}`
-    const todayStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-    const timeStr = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
-
-    const newReport: ExportHistoryItem = {
-      id: newReportId,
-      name: `${reportTypeLabel} ${datePeriodLabel}`,
-      type: reportTypeLabel,
-      format: payload.format === 'pdf' ? 'PDF' : 'Excel',
-      period: datePeriodLabel,
-      generatedBy: 'David Mensah',
-      status: 'Processing',
-      generatedAt: `${todayStr} · ${timeStr}`
-    }
-
-    setExportHistory(prev => [newReport, ...prev])
-    setActiveTab('history')
-
-    // Simulate async backend report generation
-    setTimeout(() => {
-      setExportHistory(prev =>
-        prev.map(item => item.id === newReportId ? { ...item, status: 'Ready' } : item)
-      )
-    }, 2500)
-  }
 
   const handleDownloadReport = (item: ExportHistoryItem) => {
     if (item.format === 'PDF') {
@@ -457,7 +408,7 @@ function FinancePage() {
                           {item.status === 'Ready' && (
                             <>
                               <button
-                                onClick={() => setSelectedReportForPreview(item)}
+                                onClick={() => console.log('Preview:', item.id)}
                                 className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2 py-1 text-[11px] font-semibold text-slate-700 hover:bg-slate-50 transition"
                                 title="Preview Report PDF"
                               >
@@ -520,14 +471,6 @@ function FinancePage() {
       <ExportReportModal
         open={isExportModalOpen}
         onClose={() => setIsExportModalOpen(false)}
-        onGenerate={handleGenerateReport}
-      />
-
-      {/* Report Preview Modal */}
-      <ReportPreviewModal
-        open={!!selectedReportForPreview}
-        onClose={() => setSelectedReportForPreview(null)}
-        report={selectedReportForPreview}
       />
     </div>
   )

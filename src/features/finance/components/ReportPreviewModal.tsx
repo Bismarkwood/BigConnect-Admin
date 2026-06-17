@@ -48,42 +48,45 @@ function ReportPreviewModal({ open, onClose, report }: ReportPreviewModalProps) 
                   padding: 0px;
                   max-width: 100%;
                 }
-                .header-table {
-                  width: 100%;
-                  border-collapse: collapse;
-                  margin-bottom: 5px;
+                .letterhead-header {
+                  background-color: #07152F !important;
+                  color: #ffffff !important;
+                  padding: 18px 22px;
+                  border-radius: 8px;
+                  margin-bottom: 20px;
+                  -webkit-print-color-adjust: exact;
+                  print-color-adjust: exact;
                 }
-                .header-title-left {
+                .letterhead-title-left {
                   font-size: 20px;
                   font-weight: 800;
-                  color: #07152F;
+                  color: #ffffff !important;
                   letter-spacing: 0.5px;
                   line-height: 1.2;
                 }
-                .header-subtitle-left {
+                .letterhead-subtitle-left {
                   font-size: 11px;
-                  color: #6B7280;
+                  color: #93C5FD !important;
                   font-weight: 500;
                   margin-top: 2px;
                 }
-                .header-meta-right {
+                .letterhead-meta-right {
                   text-align: right;
                   font-size: 10px;
-                  color: #6B7280;
+                  color: #E2E8F0 !important;
                   line-height: 1.5;
                 }
-                .navy-divider {
-                  height: 2.5px;
-                  background-color: #07152F;
-                  margin: 12px 0;
-                  border: none;
+                .letterhead-meta-right strong {
+                  color: #ffffff !important;
                 }
                 .identity-section {
-                  background-color: #F8FAFC;
+                  background-color: #F8FAFC !important;
                   border: 1px solid #DDE6F5;
                   border-radius: 8px;
                   padding: 12px 16px;
                   margin-bottom: 14px;
+                  -webkit-print-color-adjust: exact;
+                  print-color-adjust: exact;
                 }
                 .identity-grid {
                   display: grid;
@@ -130,12 +133,14 @@ function ReportPreviewModal({ open, onClose, report }: ReportPreviewModalProps) 
                 }
                 .summary-chip {
                   font-size: 9px;
-                  background-color: #F3F7FF;
-                  color: #315BFF;
+                  background-color: #F3F7FF !important;
+                  color: #315BFF !important;
                   padding: 2px 8px;
                   border-radius: 12px;
                   font-weight: 600;
                   border: 1px solid #DDE6F5;
+                  -webkit-print-color-adjust: exact;
+                  print-color-adjust: exact;
                 }
                 .kpi-grid {
                   display: grid;
@@ -145,10 +150,12 @@ function ReportPreviewModal({ open, onClose, report }: ReportPreviewModalProps) 
                 }
                 .kpi-card {
                   border: 1px solid #DDE6F5;
-                  border-left: 3px solid #315BFF;
+                  border-left: 3px solid #315BFF !important;
                   border-radius: 8px;
                   padding: 10px 12px;
                   background-color: #ffffff;
+                  -webkit-print-color-adjust: exact;
+                  print-color-adjust: exact;
                 }
                 .kpi-label {
                   font-size: 8px;
@@ -192,13 +199,15 @@ function ReportPreviewModal({ open, onClose, report }: ReportPreviewModalProps) 
                   overflow: hidden;
                 }
                 .breakdown-box-header {
-                  background-color: #F8FAFC;
+                  background-color: #F8FAFC !important;
                   border-bottom: 1px solid #DDE6F5;
                   padding: 6px 10px;
                   font-size: 9px;
                   font-weight: 700;
                   color: #07152F;
                   text-transform: uppercase;
+                  -webkit-print-color-adjust: exact;
+                  print-color-adjust: exact;
                 }
                 .breakdown-row {
                   display: flex;
@@ -229,14 +238,16 @@ function ReportPreviewModal({ open, onClose, report }: ReportPreviewModalProps) 
                   margin-top: 6px;
                 }
                 th {
-                  background-color: #07152F;
-                  color: #ffffff;
+                  background-color: #07152F !important;
+                  color: #ffffff !important;
                   font-size: 8.5px;
                   font-weight: 700;
                   text-transform: uppercase;
                   text-align: left;
                   padding: 8px 10px;
                   border: 1px solid #07152F;
+                  -webkit-print-color-adjust: exact;
+                  print-color-adjust: exact;
                 }
                 td {
                   padding: 8px 10px;
@@ -248,7 +259,9 @@ function ReportPreviewModal({ open, onClose, report }: ReportPreviewModalProps) 
                   vertical-align: middle;
                 }
                 tr:nth-child(even) td {
-                  background-color: #F8FAFC;
+                  background-color: #F8FAFC !important;
+                  -webkit-print-color-adjust: exact;
+                  print-color-adjust: exact;
                 }
                 .text-right {
                   text-align: right;
@@ -261,11 +274,11 @@ function ReportPreviewModal({ open, onClose, report }: ReportPreviewModalProps) 
                   font-weight: 700;
                   text-transform: uppercase;
                 }
-                .badge-success { background-color: #DEF7EC; color: #12A66A; }
-                .badge-pending { background-color: #FEF08A; color: #F59E0B; }
-                .badge-failed { background-color: #FDE8E8; color: #EF4444; }
-                .badge-expired { background-color: #F1F5F9; color: #64748B; }
-                .badge-info { background-color: #E0F2FE; color: #0284C7; }
+                .badge-success { background-color: #DEF7EC !important; color: #12A66A !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+                .badge-pending { background-color: #FEF08A !important; color: #F59E0B !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+                .badge-failed { background-color: #FDE8E8 !important; color: #EF4444 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+                .badge-expired { background-color: #F1F5F9 !important; color: #64748B !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+                .badge-info { background-color: #E0F2FE !important; color: #0284C7 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
                 .totals-container {
                   display: flex;
                   justify-content: flex-end;
@@ -289,42 +302,52 @@ function ReportPreviewModal({ open, onClose, report }: ReportPreviewModalProps) 
                   border-bottom: none;
                 }
                 .totals-row.grand-total {
-                  background-color: #07152F;
-                  color: #ffffff;
+                  background-color: #07152F !important;
+                  color: #ffffff !important;
                   font-weight: 800;
                   font-size: 10.5px;
+                  -webkit-print-color-adjust: exact;
+                  print-color-adjust: exact;
                 }
                 .totals-row.grand-total .totals-value {
-                  color: #ffffff;
+                  color: #ffffff !important;
                 }
                 .totals-value {
                   font-weight: 700;
                   color: #111827;
                 }
                 .notes-section {
-                  background-color: #F8FAFC;
-                  border-left: 3px solid #315BFF;
+                  background-color: #F8FAFC !important;
+                  border-left: 3px solid #315BFF !important;
                   border-radius: 0 8px 8px 0;
                   padding: 10px 14px;
                   margin-top: 18px;
                   font-size: 8.5px;
                   color: #6B7280;
                   line-height: 1.5;
+                  -webkit-print-color-adjust: exact;
+                  print-color-adjust: exact;
                 }
                 .notes-title {
                   font-weight: 700;
                   color: #07152F;
                   margin-bottom: 2px;
                 }
+                .footer-divider {
+                  border-top: 1px solid #07152F !important;
+                  border-bottom: 1px solid #07152F !important;
+                  height: 2px;
+                  margin-top: 30px;
+                  margin-bottom: 8px;
+                }
                 .footer-table {
                   width: 100%;
-                  margin-top: 30px;
-                  border-top: 1px solid #DDE6F5;
-                  padding-top: 8px;
+                  border: none;
                 }
                 .footer-text {
-                  font-size: 8px;
-                  color: #9CA3AF;
+                  font-size: 8.5px;
+                  color: #64748B !important;
+                  font-weight: 500;
                 }
                 .footer-center {
                   text-align: center;
@@ -409,161 +432,161 @@ function ReportPreviewModal({ open, onClose, report }: ReportPreviewModalProps) 
             style={{ boxSizing: 'border-box' }}
           >
             <div>
-              {/* Document Header Section */}
-              <table className="w-full border-collapse" style={{ border: 'none' }}>
-                <tbody>
-                  <tr style={{ background: 'transparent' }}>
-                    <td style={{ padding: '0', border: 'none', background: 'transparent', width: '50%' }}>
-                      <div className="text-[20px] font-extrabold text-[#07152F] tracking-tight">BIGCONNECT AI</div>
-                      <div className="text-[11px] text-[#6B7280] font-medium mt-0.5">Finance Module</div>
-                    </td>
-                    <td style={{ padding: '0', border: 'none', background: 'transparent', width: '50%', textAlign: 'right' }}>
-                      <div className="text-[10px] text-[#6B7280] leading-relaxed">
-                        <div><strong>Report Type:</strong> {report.type}</div>
-                        <div><strong>Period:</strong> {report.period}</div>
-                        <div><strong>Generated By:</strong> {report.generatedBy} (Finance Admin)</div>
-                        <div><strong>Generated At:</strong> {report.generatedAt}</div>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-
-              <hr className="h-[2.5px] bg-[#07152F] my-[12px] border-none" />
+              {/* Solid Deep Blue Letterhead Header Section */}
+              <div className="letterhead-header">
+                <table className="w-full border-collapse" style={{ border: 'none', margin: 0 }}>
+                  <tbody>
+                    <tr style={{ background: 'transparent' }}>
+                      <td style={{ padding: '0', border: 'none', background: 'transparent', width: '50%' }}>
+                        <div className="letterhead-title-left">BIGCONNECT AI</div>
+                        <div className="letterhead-subtitle-left">Finance Module</div>
+                      </td>
+                      <td style={{ padding: '0', border: 'none', background: 'transparent', width: '50%', textAlign: 'right' }}>
+                        <div className="letterhead-meta-right">
+                          <div><strong>Report Type:</strong> {report.type}</div>
+                          <div><strong>Period:</strong> {report.period}</div>
+                          <div><strong>Generated By:</strong> {report.generatedBy} (Finance Admin)</div>
+                          <div><strong>Generated At:</strong> {report.generatedAt}</div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
 
               {/* Report Identity Section */}
-              <div className="bg-[#F8FAFC] border border-[#DDE6F5] rounded-lg p-[12px] mb-[14px]">
-                <div className="grid grid-cols-3 gap-[12px]">
+              <div className="identity-section">
+                <div className="identity-grid">
                   <div>
-                    <div className="text-[9px] font-bold text-[#6B7280] uppercase tracking-wider">Report Name</div>
-                    <div className="text-[11px] font-bold text-[#07152F] mt-0.5">{report.name}</div>
+                    <div className="meta-item-label">Report Name</div>
+                    <div className="meta-item-value">{report.name}</div>
                   </div>
                   <div>
-                    <div className="text-[9px] font-bold text-[#6B7280] uppercase tracking-wider">Report Type</div>
-                    <div className="text-[11px] font-bold text-[#07152F] mt-0.5">{report.type}</div>
+                    <div className="meta-item-label">Report Type</div>
+                    <div className="meta-item-value">{report.type}</div>
                   </div>
                   <div>
-                    <div className="text-[9px] font-bold text-[#6B7280] uppercase tracking-wider">Report ID</div>
-                    <div className="text-[11px] font-bold text-[#07152F] mt-0.5">FIN-{report.id}</div>
+                    <div className="meta-item-label">Report ID</div>
+                    <div className="meta-item-value">FIN-{report.id}</div>
                   </div>
                   <div>
-                    <div className="text-[9px] font-bold text-[#6B7280] uppercase tracking-wider">Date Range</div>
-                    <div className="text-[11px] font-bold text-[#07152F] mt-0.5">Mar 17, 2026 - Jun 17, 2026</div>
+                    <div className="meta-item-label">Date Range</div>
+                    <div className="meta-item-value">Mar 17, 2026 - Jun 17, 2026</div>
                   </div>
                   <div>
-                    <div className="text-[9px] font-bold text-[#6B7280] uppercase tracking-wider">Currency</div>
-                    <div className="text-[11px] font-bold text-[#07152F] mt-0.5">GHS</div>
+                    <div className="meta-item-label">Currency</div>
+                    <div className="meta-item-value">GHS</div>
                   </div>
                   <div>
-                    <div className="text-[9px] font-bold text-[#6B7280] uppercase tracking-wider">Total Records</div>
-                    <div className="text-[11px] font-bold text-[#07152F] mt-0.5">7 Records</div>
+                    <div className="meta-item-label">Total Records</div>
+                    <div className="meta-item-value">7 Records</div>
                   </div>
                 </div>
               </div>
 
               {/* Report Summary Strip */}
-              <div className="border border-[#DDE6F5] rounded-lg p-[10px] mb-[14px] bg-white">
-                <div className="text-[10px] font-bold text-[#315BFF] uppercase mb-[4px]">Report Summary</div>
-                <p className="text-[10px] text-[#6B7280] leading-relaxed">
+              <div className="summary-strip">
+                <div className="summary-strip-title">Report Summary</div>
+                <p className="summary-strip-text">
                   This report summarizes payment transactions, revenue performance, failed payments, pending payments, refunded amounts, and active subscription-related payments for the selected reporting period.
                 </p>
-                <div className="flex flex-wrap gap-[6px] mt-[8px]">
-                  <span className="text-[9px] bg-[#F3F7FF] text-[#315BFF] px-[8px] py-[2px] rounded-full font-semibold border border-[#DDE6F5]">Period: {report.period}</span>
-                  <span className="text-[9px] bg-[#F3F7FF] text-[#315BFF] px-[8px] py-[2px] rounded-full font-semibold border border-[#DDE6F5]">Currency: GHS</span>
-                  <span className="text-[9px] bg-[#F3F7FF] text-[#315BFF] px-[8px] py-[2px] rounded-full font-semibold border border-[#DDE6F5]">Export Format: PDF</span>
-                  <span className="text-[9px] bg-[#F3F7FF] text-[#315BFF] px-[8px] py-[2px] rounded-full font-semibold border border-[#DDE6F5]">Source: BigConnect SaaS Backend</span>
+                <div className="chip-container">
+                  <span className="summary-chip">Period: {report.period}</span>
+                  <span className="summary-chip">Currency: GHS</span>
+                  <span className="summary-chip">Export Format: PDF</span>
+                  <span className="summary-chip">Source: BigConnect SaaS Backend</span>
                 </div>
               </div>
 
               {/* KPI Summary Grid */}
-              <div className="grid grid-cols-3 gap-[10px] mb-[16px]">
-                <div className="border border-[#DDE6F5] border-l-[3px] border-l-[#315BFF] rounded-lg p-[10px] bg-white">
-                  <div className="text-[8px] font-bold text-[#6B7280] uppercase tracking-wider">Total Revenue</div>
-                  <div className="text-[16px] font-black text-[#07152F] mt-[4px]">GHS 17,700</div>
+              <div className="kpi-grid">
+                <div className="kpi-card" style={{ borderLeftColor: '#315BFF' }}>
+                  <div className="kpi-label">Total Revenue</div>
+                  <div className="kpi-value">GHS 17,700</div>
                 </div>
-                <div className="border border-[#DDE6F5] border-l-[3px] border-l-[#12A66A] rounded-lg p-[10px] bg-white">
-                  <div className="text-[8px] font-bold text-[#6B7280] uppercase tracking-wider">Successful Payments</div>
-                  <div className="text-[16px] font-black text-[#07152F] mt-[4px]">5</div>
+                <div className="kpi-card" style={{ borderLeftColor: '#12A66A' }}>
+                  <div className="kpi-label">Successful Payments</div>
+                  <div className="kpi-value">5</div>
                 </div>
-                <div className="border border-[#DDE6F5] border-l-[3px] border-l-[#EF4444] rounded-lg p-[10px] bg-white">
-                  <div className="text-[8px] font-bold text-[#6B7280] uppercase tracking-wider">Failed Payments</div>
-                  <div className="text-[16px] font-black text-[#07152F] mt-[4px]">1</div>
+                <div className="kpi-card" style={{ borderLeftColor: '#EF4444' }}>
+                  <div className="kpi-label">Failed Payments</div>
+                  <div className="kpi-value">1</div>
                 </div>
-                <div className="border border-[#DDE6F5] border-l-[3px] border-l-[#F59E0B] rounded-lg p-[10px] bg-white">
-                  <div className="text-[8px] font-bold text-[#6B7280] uppercase tracking-wider">Pending Payments</div>
-                  <div className="text-[16px] font-black text-[#07152F] mt-[4px]">1</div>
+                <div className="kpi-card" style={{ borderLeftColor: '#F59E0B' }}>
+                  <div className="kpi-label">Pending Payments</div>
+                  <div className="kpi-value">1</div>
                 </div>
-                <div className="border border-[#DDE6F5] border-l-[3px] border-l-[#0284C7] rounded-lg p-[10px] bg-white">
-                  <div className="text-[8px] font-bold text-[#6B7280] uppercase tracking-wider">Active Subscriptions</div>
-                  <div className="text-[16px] font-black text-[#07152F] mt-[4px]">5</div>
+                <div className="kpi-card" style={{ borderLeftColor: '#0284C7' }}>
+                  <div className="kpi-label">Active Subscriptions</div>
+                  <div className="kpi-value">5</div>
                 </div>
-                <div className="border border-[#DDE6F5] border-l-[3px] border-l-[#64748B] rounded-lg p-[10px] bg-white">
-                  <div className="text-[8px] font-bold text-[#6B7280] uppercase tracking-wider">Refunded Amount</div>
-                  <div className="text-[16px] font-black text-[#07152F] mt-[4px]">GHS 0.00</div>
+                <div className="kpi-card" style={{ borderLeftColor: '#64748B' }}>
+                  <div className="kpi-label">Refunded Amount</div>
+                  <div className="kpi-value">GHS 0.00</div>
                 </div>
               </div>
 
               {/* Financial Breakdown Section */}
-              <div className="text-[12px] font-extrabold text-[#07152F] uppercase mb-[8px] flex items-center gap-[6px]">
+              <div className="section-header">
                 Financial Breakdown
-                <div className="flex-1 h-[1px] bg-[#DDE6F5]"></div>
+                <div className="section-header-line"></div>
               </div>
-              <div className="grid grid-cols-3 gap-[12px] mb-[14px]">
-                <div className="border border-[#DDE6F5] rounded-lg bg-white overflow-hidden">
-                  <div className="bg-[#F8FAFC] border-b border-[#DDE6F5] px-[10px] py-[6px] text-[9px] font-bold text-[#07152F] uppercase">Revenue by Plan</div>
+              <div className="breakdown-grid">
+                <div className="breakdown-box">
+                  <div className="breakdown-box-header">Revenue by Plan</div>
                   <div className="breakdown-row">
-                    <span className="text-[#6B7280]">Starter</span>
-                    <span className="font-bold text-[#111827]">GHS 3,000</span>
+                    <span className="breakdown-row-label">Starter</span>
+                    <span className="breakdown-row-value">GHS 3,000</span>
                   </div>
                   <div className="breakdown-row">
-                    <span className="text-[#6B7280]">Standard</span>
-                    <span className="font-bold text-[#111827]">GHS 8,400</span>
+                    <span className="breakdown-row-label">Standard</span>
+                    <span className="breakdown-row-value">GHS 8,400</span>
                   </div>
                   <div className="breakdown-row">
-                    <span className="text-[#6B7280]">Premium</span>
-                    <span className="font-bold text-[#111827]">GHS 6,300</span>
-                  </div>
-                </div>
-
-                <div className="border border-[#DDE6F5] rounded-lg bg-white overflow-hidden">
-                  <div className="bg-[#F8FAFC] border-b border-[#DDE6F5] px-[10px] py-[6px] text-[9px] font-bold text-[#07152F] uppercase">Revenue by Gateway</div>
-                  <div className="breakdown-row">
-                    <span className="text-[#6B7280]">Paystack</span>
-                    <span className="font-bold text-[#111827]">GHS 12,500</span>
-                  </div>
-                  <div className="breakdown-row">
-                    <span className="text-[#6B7280]">Hubtel</span>
-                    <span className="font-bold text-[#111827]">GHS 5,200</span>
-                  </div>
-                  <div className="breakdown-row">
-                    <span className="text-[#6B7280]">Flutterwave</span>
-                    <span className="font-bold text-[#111827]">GHS 0.00</span>
+                    <span className="breakdown-row-label">Premium</span>
+                    <span className="breakdown-row-value">GHS 6,300</span>
                   </div>
                 </div>
 
-                <div className="border border-[#DDE6F5] rounded-lg bg-white overflow-hidden">
-                  <div className="bg-[#F8FAFC] border-b border-[#DDE6F5] px-[10px] py-[6px] text-[9px] font-bold text-[#07152F] uppercase">Payment Status</div>
+                <div className="breakdown-box">
+                  <div className="breakdown-box-header">Revenue by Gateway</div>
                   <div className="breakdown-row">
-                    <span className="text-[#6B7280]">Successful</span>
-                    <span className="font-bold text-[#111827]">5</span>
+                    <span className="breakdown-row-label">Paystack</span>
+                    <span className="breakdown-row-value">GHS 12,500</span>
                   </div>
                   <div className="breakdown-row">
-                    <span className="text-[#6B7280]">Pending</span>
-                    <span className="font-bold text-[#111827]">1</span>
+                    <span className="breakdown-row-label">Hubtel</span>
+                    <span className="breakdown-row-value">GHS 5,200</span>
                   </div>
                   <div className="breakdown-row">
-                    <span className="text-[#6B7280]">Failed</span>
-                    <span className="font-bold text-[#111827]">1</span>
+                    <span className="breakdown-row-label">Flutterwave</span>
+                    <span className="breakdown-row-value">GHS 0.00</span>
+                  </div>
+                </div>
+
+                <div className="breakdown-box">
+                  <div className="breakdown-box-header">Payment Status</div>
+                  <div className="breakdown-row">
+                    <span className="breakdown-row-label">Successful</span>
+                    <span className="breakdown-row-value">5</span>
+                  </div>
+                  <div className="breakdown-row">
+                    <span className="breakdown-row-label">Pending</span>
+                    <span className="breakdown-row-value">1</span>
+                  </div>
+                  <div className="breakdown-row">
+                    <span className="breakdown-row-label">Failed</span>
+                    <span className="breakdown-row-value">1</span>
                   </div>
                 </div>
               </div>
 
               {/* Transactions List */}
-              <div className="text-[12px] font-extrabold text-[#07152F] uppercase mt-[18px] mb-[4px] flex items-center gap-[6px]">
+              <div className="section-header">
                 Transactions List
-                <div className="flex-1 h-[1px] bg-[#DDE6F5]"></div>
+                <div className="section-header-line"></div>
               </div>
-              <div className="text-[9.5px] text-[#6B7280] mb-[8px]">Payment transactions captured within the selected reporting period.</div>
+              <div className="table-subtitle">Payment transactions captured within the selected reporting period.</div>
               
               <table className="w-full">
                 <thead>
@@ -581,58 +604,58 @@ function ReportPreviewModal({ open, onClose, report }: ReportPreviewModalProps) 
                 </thead>
                 <tbody>
                   <tr>
-                    <td className="font-bold text-blue-600">PAY-00128</td>
-                    <td className="font-semibold">KFC Ghana</td>
+                    <td style={{ fontWeight: 'bold', color: '#315BFF' }}>PAY-00128</td>
+                    <td style={{ fontWeight: 600 }}>KFC Ghana</td>
                     <td>Enterprise</td>
                     <td>Paystack</td>
                     <td>Mobile Money</td>
-                    <td className="text-right font-semibold">GHS 2,500</td>
+                    <td className="text-right" style={{ fontWeight: 600 }}>GHS 2,500</td>
                     <td><span className="badge badge-success">Successful</span></td>
-                    <td className="font-mono text-[8px] text-[#64748B]">PSK_A2X929</td>
+                    <td style={{ fontFamily: 'monospace', fontSize: '8px', color: '#64748B' }}>PSK_A2X929</td>
                     <td>Jun 16, 2026</td>
                   </tr>
                   <tr>
-                    <td className="font-bold text-blue-600">PAY-00127</td>
-                    <td className="font-semibold">RightShop</td>
+                    <td style={{ fontWeight: 'bold', color: '#315BFF' }}>PAY-00127</td>
+                    <td style={{ fontWeight: 600 }}>RightShop</td>
                     <td>Standard</td>
                     <td>Paystack</td>
                     <td>Mobile Money</td>
-                    <td className="text-right font-semibold">GHS 2,100</td>
+                    <td className="text-right" style={{ fontWeight: 600 }}>GHS 2,100</td>
                     <td><span className="badge badge-success">Successful</span></td>
-                    <td className="font-mono text-[8px] text-[#64748B]">PSK_B3Y830</td>
+                    <td style={{ fontFamily: 'monospace', fontSize: '8px', color: '#64748B' }}>PSK_B3Y830</td>
                     <td>Jun 16, 2026</td>
                   </tr>
                   <tr>
-                    <td className="font-bold text-blue-600">PAY-00126</td>
-                    <td className="font-semibold">Caddyman Log.</td>
+                    <td style={{ fontWeight: 'bold', color: '#315BFF' }}>PAY-00126</td>
+                    <td style={{ fontWeight: 600 }}>Caddyman Log.</td>
                     <td>Premium</td>
                     <td>Hubtel</td>
                     <td>Mobile Money</td>
-                    <td className="text-right font-semibold">GHS 2,500</td>
+                    <td className="text-right" style={{ fontWeight: 600 }}>GHS 2,500</td>
                     <td><span className="badge badge-success">Successful</span></td>
-                    <td className="font-mono text-[8px] text-[#64748B]">HBT_C4Z731</td>
+                    <td style={{ fontFamily: 'monospace', fontSize: '8px', color: '#64748B' }}>HBT_C4Z731</td>
                     <td>Jun 15, 2026</td>
                   </tr>
                   <tr>
-                    <td className="font-bold text-blue-600">PAY-00125</td>
-                    <td className="font-semibold">Bloom Adv.</td>
+                    <td style={{ fontWeight: 'bold', color: '#315BFF' }}>PAY-00125</td>
+                    <td style={{ fontWeight: 600 }}>Bloom Adv.</td>
                     <td>Starter</td>
                     <td>Paystack</td>
                     <td>Bank Transfer</td>
-                    <td className="text-right font-semibold">GHS 1,500</td>
+                    <td className="text-right" style={{ fontWeight: 600 }}>GHS 1,500</td>
                     <td><span className="badge badge-pending">Pending</span></td>
-                    <td className="font-mono text-[8px] text-[#64748B]">PSK_D5A632</td>
+                    <td style={{ fontFamily: 'monospace', fontSize: '8px', color: '#64748B' }}>PSK_D5A632</td>
                     <td>Jun 15, 2026</td>
                   </tr>
                   <tr>
-                    <td className="font-bold text-blue-600">PAY-00124</td>
-                    <td className="font-semibold">Hubtel Pay.</td>
+                    <td style={{ fontWeight: 'bold', color: '#315BFF' }}>PAY-00124</td>
+                    <td style={{ fontWeight: 600 }}>Hubtel Pay.</td>
                     <td>Standard</td>
                     <td>Paystack</td>
                     <td>Mobile Money</td>
-                    <td className="text-right font-semibold">GHS 2,100</td>
+                    <td className="text-right" style={{ fontWeight: 600 }}>GHS 2,100</td>
                     <td><span className="badge badge-failed">Failed</span></td>
-                    <td className="font-mono text-[8px] text-[#64748B]">PSK_E6B533</td>
+                    <td style={{ fontFamily: 'monospace', fontSize: '8px', color: '#64748B' }}>PSK_E6B533</td>
                     <td>Jun 14, 2026</td>
                   </tr>
                 </tbody>
@@ -642,15 +665,15 @@ function ReportPreviewModal({ open, onClose, report }: ReportPreviewModalProps) 
               <div className="totals-container">
                 <div className="totals-box">
                   <div className="totals-row">
-                    <span className="text-[#6B7280]">Total Successful Amount:</span>
+                    <span style={{ color: '#6B7280' }}>Total Successful Amount:</span>
                     <span className="totals-value">GHS 17,700</span>
                   </div>
                   <div className="totals-row">
-                    <span className="text-[#6B7280]">Total Pending Amount:</span>
+                    <span style={{ color: '#6B7280' }}>Total Pending Amount:</span>
                     <span className="totals-value">GHS 1,500</span>
                   </div>
                   <div className="totals-row">
-                    <span className="text-[#6B7280]">Total Failed Amount:</span>
+                    <span style={{ color: '#6B7280' }}>Total Failed Amount:</span>
                     <span className="totals-value">GHS 2,100</span>
                   </div>
                   <div className="totals-row grand-total">
@@ -667,22 +690,25 @@ function ReportPreviewModal({ open, onClose, report }: ReportPreviewModalProps) 
               </div>
             </div>
 
-            {/* Branded Footer Area */}
-            <table className="w-full footer-table" style={{ borderLeft: 'none', borderRight: 'none', borderBottom: 'none' }}>
-              <tbody>
-                <tr style={{ background: 'transparent' }}>
-                  <td className="footer-text" style={{ padding: '0', border: 'none', background: 'transparent' }}>
-                    BigConnect AI · BigData Ghana Limited
-                  </td>
-                  <td className="footer-text footer-center" style={{ padding: '0', border: 'none', background: 'transparent' }}>
-                    Generated from BigConnect Finance Module
-                  </td>
-                  <td className="footer-text footer-right" style={{ padding: '0', border: 'none', background: 'transparent' }}>
-                    Page 1 of 1
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            {/* Branded Footer Area with Double Deep Blue Strokes */}
+            <div>
+              <div className="footer-divider" />
+              <table className="w-full footer-table" style={{ border: 'none', margin: 0 }}>
+                <tbody>
+                  <tr style={{ background: 'transparent' }}>
+                    <td className="footer-text" style={{ padding: '0', border: 'none', background: 'transparent', width: '33%' }}>
+                      BigConnect AI · BigData Ghana Limited
+                    </td>
+                    <td className="footer-text footer-center" style={{ padding: '0', border: 'none', background: 'transparent', width: '34%' }}>
+                      Generated from BigConnect Finance Module
+                    </td>
+                    <td className="footer-text footer-right" style={{ padding: '0', border: 'none', background: 'transparent', width: '33%' }}>
+                      Page 1 of 1
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
