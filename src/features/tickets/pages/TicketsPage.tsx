@@ -7,7 +7,6 @@ import {
   Search,
   Download,
   Eye,
-  ArrowUpRight,
 } from 'lucide-react'
 import TicketDetailModal from '../components/TicketDetailModal'
 import type { TicketStatus, TicketPriority } from '../types'
@@ -164,14 +163,6 @@ function TicketsPage() {
         </div>
       </div>
 
-      {/* Info */}
-      <div className="rounded-xl border border-blue-200 bg-blue-50/40 px-5 py-3.5">
-        <div className="flex items-center gap-2.5">
-          <ArrowUpRight className="h-4 w-4 text-blue-600" strokeWidth={1.5} />
-          <span className="text-[12px] font-medium text-[#07152F]">Client-Raised Tickets</span>
-        </div>
-        <p className="mt-1 text-[11px] text-[#6B7A99]">Tickets are created by clients from the Client Platform. The SaaS backend stores them and the Admin Platform manages resolution, assignment, and communication.</p>
-      </div>
 
       {/* Ticket Detail Modal */}
       <TicketDetailModal
