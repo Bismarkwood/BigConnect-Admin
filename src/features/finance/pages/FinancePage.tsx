@@ -9,9 +9,11 @@ import {
   Eye,
   XCircle,
   Loader2,
+  Trash2,
 } from 'lucide-react'
 import InvoicePreviewModal from '../components/InvoicePreviewModal'
 import ExportReportModal, { type ExportReportPayload } from '../components/ExportReportModal'
+import ReportPreviewModal from '../components/ReportPreviewModal'
 import type { PaymentStatus, WebhookStatus } from '../types'
 
 // Mock payments
@@ -80,6 +82,7 @@ function FinancePage() {
   const [viewInvoiceId, setViewInvoiceId] = useState<string | null>(null)
   const [isExportModalOpen, setIsExportModalOpen] = useState(false)
   const [exportHistory, setExportHistory] = useState<ExportHistoryItem[]>(initialHistory)
+  const [selectedReportForPreview, setSelectedReportForPreview] = useState<ExportHistoryItem | null>(null)
 
   const successful = mockPayments.filter((p) => p.status === 'Successful').length
   const pending = mockPayments.filter((p) => p.status === 'Pending').length
@@ -140,6 +143,7 @@ function FinancePage() {
 
   const handleDownloadReport = (item: ExportHistoryItem) => {
     if (item.format === 'PDF') {
+      // Direct PDF download triggers the print view on the template
       const printWindow = window.open('', '_blank')
       if (printWindow) {
         printWindow.document.write(`
@@ -147,28 +151,24 @@ function FinancePage() {
             <head>
               <title>${item.name}</title>
               <style>
-                body { font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 40px; color: #07152F; background-color: #ffffff; }
+                body { font-family: 'Inter', system-ui, -apple-system, sans-serif; margin: 0; padding: 40px; color: #111827; background-color: #ffffff; }
                 .header { border-bottom: 2px solid #07152F; padding-bottom: 20px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: flex-start; }
                 .logo { font-size: 24px; font-weight: 800; color: #1e4ed8; text-transform: uppercase; letter-spacing: 1px; }
                 .report-title { font-size: 20px; font-weight: 700; margin-top: 5px; color: #07152F; }
-                .metadata { font-size: 11px; text-align: right; color: #6B7A99; line-height: 1.6; }
+                .metadata { font-size: 11px; text-align: right; color: #6B7280; line-height: 1.6; }
                 .summary-grid { display: grid; grid-template-cols: repeat(3, 1fr); gap: 15px; margin-bottom: 40px; }
                 .summary-card { background: #F8FAFC; border: 1px solid #E2E8F0; padding: 15px; border-radius: 8px; }
-                .summary-label { font-size: 9px; font-weight: 700; text-transform: uppercase; color: #6B7A99; letter-spacing: 0.5px; }
+                .summary-label { font-size: 9px; font-weight: 700; text-transform: uppercase; color: #6B7280; letter-spacing: 0.5px; }
                 .summary-value { font-size: 18px; font-weight: 800; color: #07152F; margin-top: 5px; }
                 table { width: 100%; border-collapse: collapse; margin-top: 15px; }
                 th { background-color: #07152F; color: #ffffff; font-size: 10px; font-weight: 700; text-transform: uppercase; text-align: left; padding: 10px 12px; border: 1px solid #07152F; }
-                td { padding: 10px 12px; border-bottom: 1px solid #E2E8F0; font-size: 11px; color: #07152F; }
+                td { padding: 10px 12px; border-bottom: 1px solid #DDE6F5; font-size: 11px; color: #111827; }
                 tr:nth-child(even) td { background-color: #F8FAFC; }
                 .status-badge { display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 9px; font-weight: 700; }
-                .status-successful { background-color: #DEF7EC; color: #03543F; }
-                .status-pending { background-color: #FEF08A; color: #713F12; }
-                .status-failed { background-color: #FDE8E8; color: #9B1C1C; }
-                .footer { border-top: 1px solid #E2E8F0; padding-top: 20px; margin-top: 50px; font-size: 9px; color: #6B7A99; display: flex; justify-content: space-between; }
-                @media print {
-                  body { padding: 20px; }
-                  button { display: none; }
-                }
+                .status-successful { background-color: #DEF7EC; color: #12A66A; }
+                .status-pending { background-color: #FEF08A; color: #F59E0B; }
+                .status-failed { background-color: #FDE8E8; color: #EF4444; }
+                .footer { border-top: 1px solid #DDE6F5; padding-top: 20px; margin-top: 50px; font-size: 9px; color: #6B7280; display: flex; justify-content: space-between; }
               </style>
             </head>
             <body>
@@ -183,7 +183,6 @@ function FinancePage() {
                   <div><strong>Generated At:</strong> ${item.generatedAt}</div>
                 </div>
               </div>
-
               <div class="summary-grid">
                 <div class="summary-card">
                   <div class="summary-label">Total Revenue</div>
@@ -197,22 +196,8 @@ function FinancePage() {
                   <div class="summary-label">Failed Payments</div>
                   <div class="summary-value">1</div>
                 </div>
-                <div class="summary-card">
-                  <div class="summary-label">Pending Payments</div>
-                  <div class="summary-value">1</div>
-                </div>
-                <div class="summary-card">
-                  <div class="summary-label">Active Subscriptions</div>
-                  <div class="summary-value">5</div>
-                </div>
-                <div class="summary-card">
-                  <div class="summary-label">Refunded Amount</div>
-                  <div class="summary-value">GHS 0.00</div>
-                </div>
               </div>
-
-              <div class="report-title" style="font-size: 14px; margin-bottom: 10px;">Transactions List</div>
-              <table>
+              <table style="width: 100%;">
                 <thead>
                   <tr>
                     <th>Payment ID</th>
@@ -222,8 +207,6 @@ function FinancePage() {
                     <th>Method</th>
                     <th>Amount</th>
                     <th>Status</th>
-                    <th>Reference</th>
-                    <th>Payment Date</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -235,8 +218,6 @@ function FinancePage() {
                     <td>Mobile Money</td>
                     <td>GHS 2,500</td>
                     <td><span class="status-badge status-successful">Successful</span></td>
-                    <td>PSK_A2X929</td>
-                    <td>Jun 16, 2026</td>
                   </tr>
                   <tr>
                     <td>PAY-00127</td>
@@ -246,52 +227,14 @@ function FinancePage() {
                     <td>Mobile Money</td>
                     <td>GHS 2,100</td>
                     <td><span class="status-badge status-successful">Successful</span></td>
-                    <td>PSK_B3Y830</td>
-                    <td>Jun 16, 2026</td>
-                  </tr>
-                  <tr>
-                    <td>PAY-00126</td>
-                    <td>Caddyman Logistics</td>
-                    <td>Premium</td>
-                    <td>Hubtel</td>
-                    <td>Mobile Money</td>
-                    <td>GHS 2,500</td>
-                    <td><span class="status-badge status-successful">Successful</span></td>
-                    <td>HBT_C4Z731</td>
-                    <td>Jun 15, 2026</td>
-                  </tr>
-                  <tr>
-                    <td>PAY-00125</td>
-                    <td>Bloom Advisors</td>
-                    <td>Starter</td>
-                    <td>Paystack</td>
-                    <td>Bank Transfer</td>
-                    <td>GHS 1,500</td>
-                    <td><span class="status-badge status-pending">Pending</span></td>
-                    <td>PSK_D5A632</td>
-                    <td>Jun 15, 2026</td>
-                  </tr>
-                  <tr>
-                    <td>PAY-00124</td>
-                    <td>Hubtel Payments</td>
-                    <td>Standard</td>
-                    <td>Paystack</td>
-                    <td>Mobile Money</td>
-                    <td>GHS 2,100</td>
-                    <td><span class="status-badge status-failed">Failed</span></td>
-                    <td>PSK_E6B533</td>
-                    <td>Jun 14, 2026</td>
                   </tr>
                 </tbody>
               </table>
-
               <div class="footer">
                 <div>BigConnect AI · BigData Ghana Limited</div>
-                <div>This report was generated from the BigConnect Finance Module.</div>
+                <div>Page 1 of 1</div>
               </div>
-              <script>
-                window.onload = function() { window.print(); }
-              </script>
+              <script>window.onload = function() { window.print(); }</script>
             </body>
           </html>
         `)
@@ -310,11 +253,16 @@ function FinancePage() {
       const blob = new Blob([headers + rows], { type: 'text/csv;charset=utf-8;' })
       const link = document.createElement('a')
       link.href = URL.createObjectURL(blob)
-      link.setAttribute('download', `${item.name.toLowerCase().replace(/\s+/g, '_')}.csv`)
+      const cleanName = `bigconnect-finance-payments-report-last-3-months-${new Date().toISOString().split('T')[0]}.csv`
+      link.setAttribute('download', cleanName)
       document.body.appendChild(link)
       link.click()
       document.body.removeChild(link)
     }
+  }
+
+  const handleDeleteReport = (reportId: string) => {
+    setExportHistory(prev => prev.filter(r => r.id !== reportId))
   }
 
   return (
@@ -327,7 +275,7 @@ function FinancePage() {
         </div>
         <button
           onClick={() => setIsExportModalOpen(true)}
-          className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-[13px] font-semibold text-white transition hover:bg-blue-700"
+          className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-[13px] font-semibold text-white transition hover:bg-blue-700 shadow-sm"
         >
           <Download className="h-4 w-4" strokeWidth={1.5} />
           Export Report
@@ -463,7 +411,8 @@ function FinancePage() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-slate-200">
-                  <th className="px-6 py-4 text-left text-[11px] font-semibold uppercase tracking-wider text-slate-400">Report Name</th>
+                  <th className="px-6 py-4 text-left text-[11px] font-semibold uppercase tracking-wider text-slate-400">Report ID</th>
+                  <th className="px-4 py-4 text-left text-[11px] font-semibold uppercase tracking-wider text-slate-400">Report Name</th>
                   <th className="px-4 py-4 text-left text-[11px] font-semibold uppercase tracking-wider text-slate-400">Type</th>
                   <th className="px-4 py-4 text-left text-[11px] font-semibold uppercase tracking-wider text-slate-400">Format</th>
                   <th className="px-4 py-4 text-left text-[11px] font-semibold uppercase tracking-wider text-slate-400">Period</th>
@@ -484,7 +433,8 @@ function FinancePage() {
 
                   return (
                     <tr key={item.id} className="border-b border-slate-100 last:border-0 hover:bg-slate-50/60 transition">
-                      <td className="px-6 py-4 text-[12px] font-medium text-slate-900">{item.name}</td>
+                      <td className="px-6 py-4 text-[12px] font-mono font-semibold text-[#07152F]">{item.id}</td>
+                      <td className="px-4 py-4 text-[12px] font-medium text-slate-900">{item.name}</td>
                       <td className="px-4 py-4 text-[11px] text-slate-600">{item.type}</td>
                       <td className="px-4 py-4">
                         <span className={`inline-flex rounded border px-1.5 py-0.5 text-[9px] font-mono font-bold ${
@@ -503,19 +453,43 @@ function FinancePage() {
                       </td>
                       <td className="px-4 py-4 text-[11px] text-slate-500">{item.generatedAt}</td>
                       <td className="px-4 py-4">
-                        {item.status === 'Ready' ? (
-                          <button
-                            onClick={() => handleDownloadReport(item)}
-                            className="inline-flex items-center gap-1 rounded-lg border border-blue-200 bg-white px-2.5 py-1 text-[11px] font-semibold text-blue-600 hover:bg-blue-50 transition"
-                          >
-                            <Download className="h-3 w-3" />
-                            Download
-                          </button>
-                        ) : item.status === 'Processing' ? (
-                          <span className="text-[11px] text-slate-400">Generating...</span>
-                        ) : (
-                          <span className="text-[11px] text-slate-400">—</span>
-                        )}
+                        <div className="flex items-center gap-2">
+                          {item.status === 'Ready' && (
+                            <>
+                              <button
+                                onClick={() => setSelectedReportForPreview(item)}
+                                className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2 py-1 text-[11px] font-semibold text-slate-700 hover:bg-slate-50 transition"
+                                title="Preview Report PDF"
+                              >
+                                <Eye className="h-3 w-3" />
+                                Preview
+                              </button>
+                              <button
+                                onClick={() => handleDownloadReport(item)}
+                                className="inline-flex items-center gap-1 rounded-lg border border-blue-200 bg-white px-2 py-1 text-[11px] font-semibold text-blue-600 hover:bg-blue-50 transition"
+                                title="Download File"
+                              >
+                                <Download className="h-3 w-3" />
+                                Download
+                              </button>
+                            </>
+                          )}
+                          {item.status === 'Processing' && (
+                            <span className="text-[11px] text-slate-400 flex items-center gap-1">
+                              <Loader2 className="h-3 w-3 animate-spin" />
+                              Generating...
+                            </span>
+                          )}
+                          {item.status !== 'Processing' && (
+                            <button
+                              onClick={() => handleDeleteReport(item.id)}
+                              className="p-1 rounded-lg text-slate-400 hover:bg-red-50 hover:text-red-600 transition"
+                              title="Delete Report"
+                            >
+                              <Trash2 className="h-3.5 w-3.5" />
+                            </button>
+                          )}
+                        </div>
                       </td>
                     </tr>
                   )
@@ -547,6 +521,13 @@ function FinancePage() {
         open={isExportModalOpen}
         onClose={() => setIsExportModalOpen(false)}
         onGenerate={handleGenerateReport}
+      />
+
+      {/* Report Preview Modal */}
+      <ReportPreviewModal
+        open={!!selectedReportForPreview}
+        onClose={() => setSelectedReportForPreview(null)}
+        report={selectedReportForPreview}
       />
     </div>
   )
