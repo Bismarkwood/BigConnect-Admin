@@ -45,14 +45,21 @@ const priorityConfig: Record<TicketPriority, { color: string; bg: string }> = {
 
 function TicketsPage() {
   const [searchQuery, setSearchQuery] = useState('')
-  const [selectedTicket, setSelectedTicket] = useState<typeof mockTickets[0] | null>(null)
+  const [tickets, setTickets] = useState(mockTickets)
+  const [selectedTicketId, setSelectedTicketId] = useState<string | null>(null)
 
-  const newTickets = mockTickets.filter(t => t.status === 'New').length
-  const openTickets = mockTickets.filter(t => t.status === 'Open' || t.status === 'In Progress').length
-  const escalated = mockTickets.filter(t => t.status === 'Escalated').length
-  const resolved = mockTickets.filter(t => t.status === 'Resolved' || t.status === 'Closed').length
+  const selectedTicket = tickets.find(t => t.id === selectedTicketId) || null
 
-  const filtered = mockTickets.filter(t =>
+  const handleUpdateTicket = (updatedTicket: typeof mockTickets[0]) => {
+    setTickets(prev => prev.map(t => t.id === updatedTicket.id ? updatedTicket : t))
+  }
+
+  const newTickets = tickets.filter(t => t.status === 'New').length
+  const openTickets = tickets.filter(t => t.status === 'Open' || t.status === 'In Progress').length
+  const escalated = tickets.filter(t => t.status === 'Escalated').length
+  const resolved = tickets.filter(t => t.status === 'Resolved' || t.status === 'Closed').length
+
+  const filtered = tickets.filter(t =>
     t.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
     t.clientName.toLowerCase().includes(searchQuery.toLowerCase()) ||
     t.id.toLowerCase().includes(searchQuery.toLowerCase())
@@ -118,7 +125,7 @@ function TicketsPage() {
                     <td className="px-4 py-4 text-[11px] text-slate-500">{ticket.assignedTo}</td>
                     <td className="px-4 py-4 text-[11px] text-slate-500">{ticket.createdAt}</td>
                     <td className="px-4 py-4">
-                      <button onClick={() => setSelectedTicket(ticket)} className="flex h-7 w-7 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700" title="View">
+                      <button onClick={() => setSelectedTicketId(ticket.id)} className="flex h-7 w-7 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700" title="View">
                         <Eye className="h-3.5 w-3.5" strokeWidth={1.5} />
                       </button>
                     </td>
@@ -150,7 +157,8 @@ function TicketsPage() {
       <TicketDetailModal
         ticket={selectedTicket as any}
         open={!!selectedTicket}
-        onClose={() => setSelectedTicket(null)}
+        onClose={() => setSelectedTicketId(null)}
+        onUpdateTicket={handleUpdateTicket}
       />
     </div>
   )
