@@ -11,6 +11,7 @@ import {
 } from 'lucide-react'
 import TicketDetailModal from '../components/TicketDetailModal'
 import type { TicketStatus, TicketPriority } from '../types'
+import Toast, { type ToastMessage } from '../../../core/components/Toast'
 
 const mockTickets = [
   { id: 'TCK-2026-000124', clientName: 'RightShop Ghana', subject: 'WhatsApp channel not connecting', category: 'Channel Issue', priority: 'High' as TicketPriority, status: 'New' as TicketStatus, source: 'Client Platform', assignedTo: 'Unassigned', createdAt: 'Jun 16, 2026', lastUpdated: 'Jun 16, 2026' },
@@ -47,11 +48,30 @@ function TicketsPage() {
   const [searchQuery, setSearchQuery] = useState('')
   const [tickets, setTickets] = useState(mockTickets)
   const [selectedTicketId, setSelectedTicketId] = useState<string | null>(null)
+  const [toasts, setToasts] = useState<ToastMessage[]>([])
 
   const selectedTicket = tickets.find(t => t.id === selectedTicketId) || null
 
+  const addToast = (type: 'success' | 'error' | 'info', text: string) => {
+    setToasts(prev => [...prev, { id: String(Date.now()), type, text }])
+  }
+
+  const dismissToast = (id: string) => {
+    setToasts(prev => prev.filter(t => t.id !== id))
+  }
+
   const handleUpdateTicket = (updatedTicket: typeof mockTickets[0]) => {
+    const previousTicket = tickets.find(t => t.id === updatedTicket.id)
     setTickets(prev => prev.map(t => t.id === updatedTicket.id ? updatedTicket : t))
+
+    // Check if the ticket is newly closed
+    if (updatedTicket.status === 'Closed' && previousTicket && previousTicket.status !== 'Closed') {
+      // Show browser alert and a premium UI toast
+      setTimeout(() => {
+        alert(`Ticket ${updatedTicket.id} has been closed.`);
+      }, 100);
+      addToast('success', `Ticket ${updatedTicket.id} has been successfully closed.`)
+    }
   }
 
   const newTickets = tickets.filter(t => t.status === 'New').length
@@ -160,6 +180,9 @@ function TicketsPage() {
         onClose={() => setSelectedTicketId(null)}
         onUpdateTicket={handleUpdateTicket}
       />
+
+      {/* Global Toasts */}
+      <Toast toasts={toasts} onDismiss={dismissToast} />
     </div>
   )
 }
